@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.admin_bookmarket.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" >
+
+        <action
+            android:id="@+id/action_nav_home_to_nav_detail"
+            app:destination="@id/nav_detail" >
+            <argument
+                android:name="bookId"
+                app:argType="integer"
+                android:defaultValue="-1" />
+            <argument android:name="shouldIRenderItemValue"
+                app:argType="boolean"
+                android:defaultValue="false"/>
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_detail"
+        android:name="com.example.admin_bookmarket.ui.detail.DetailFragment"
+        android:label="@string/detail"
+        tools:layout="@layout/fragment_detail" >
+
+        <argument
+            android:name="bookId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <argument android:name="shouldIRenderItemValue"
+            app:argType="boolean"
+            android:defaultValue="false"/>
+        <action
+            android:id="@+id/action_nav_detail_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_statistic"
+        android:name="com.example.admin_bookmarket.ui.statistic.StatisticFragment"
+        tools:layout="@layout/fragment_statistic"
+        android:label="@string/statistics"/>
+</navigation>

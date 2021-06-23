@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="36dp"
+    android:checkable="true"
+    android:clickable="true"
+    android:focusable="true"
+    android:backgroundTint="@color/search_fill"
+    app:strokeColor="#A4858C94"
+    android:theme="@style/Theme.MaterialComponents.DayNight">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/search_bar"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:fontFamily="@font/roboto_medium"
+        app:boxStrokeWidth="0dp"
+        app:boxBackgroundColor="@color/white"
+        android:focusable="false"
+
+        app:endIconMode="clear_text"
+        app:startIconDrawable="@drawable/ic_baseline_search_35"
+        app:hintEnabled="false"
+        app:boxStrokeWidthFocused="0dp"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtSearchText"
+            android:paddingTop="-30dp"
+            android:paddingBottom="-50dp"
+            android:textColor="@color/gray"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Search books"
+            android:textStyle="normal"
+            android:editable="false"
+            android:focusable="false"
+            android:inputType="textFilter"
+            android:textSize="17sp"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+</androidx.cardview.widget.CardView>

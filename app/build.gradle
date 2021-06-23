@@ -17,6 +17,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -30,6 +31,9 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    packagingOptions{
+        pickFirst 'androidsupportmultidexversion.txt'
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -56,6 +60,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.0'
     implementation 'androidx.annotation:annotation:1.1.0'
+    implementation 'com.google.firebase:firebase-firestore-ktx:23.0.1'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -77,5 +82,6 @@ dependencies {
 //    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0"
     //
     implementation 'androidx.activity:activity-ktx:1.2.3'
-
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+    implementation 'com.android.support:multidex:1.0.3'
 }

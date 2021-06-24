@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.admin_bookmarket.ItemDetailActivity
 import com.example.admin_bookmarket.RecyclerViewClickListener
+import com.example.admin_bookmarket.SearchActivity
 import com.example.admin_bookmarket.SharedViewModel
 import com.example.admin_bookmarket.data.common.Constants.ITEM
 import com.example.admin_bookmarket.data.common.MarginItemDecoration
@@ -48,6 +49,10 @@ class HomeFragment : Fragment(), RecyclerViewClickListener {
             adapter = bookAdapter
         }
         homeViewModel.lstCurrentBook.observe(viewLifecycleOwner, changeObserver)
+
+        binding.htbHomeToolBar.edtSearchText.setOnClickListener{
+            startActivity(Intent(context, SearchActivity::class.java))
+        }
         return binding.root
     }
 

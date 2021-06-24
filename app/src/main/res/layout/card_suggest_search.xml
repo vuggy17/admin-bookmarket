@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@color/white">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_search_35"
+        android:alpha="0.4"/>
+    <TextView
+        android:id="@+id/tvSuggestSearchName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="recent search"
+        android:textSize="14dp"
+        android:layout_marginVertical="7dp"
+        android:layout_marginStart="20dp"
+        android:fontFamily="@font/roboto_bold"/>
+</LinearLayout>
+</androidx.cardview.widget.CardView>

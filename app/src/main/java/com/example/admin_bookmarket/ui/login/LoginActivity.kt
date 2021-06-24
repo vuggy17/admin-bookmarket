@@ -17,6 +17,7 @@ import com.example.admin_bookmarket.MainActivity
 import com.example.admin_bookmarket.databinding.ActivityLoginBinding
 
 import com.example.admin_bookmarket.R
+import com.example.admin_bookmarket.data.FullBookList
 
 class LoginActivity : AppCompatActivity() {
 
@@ -26,6 +27,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        FullBookList.getInstance().lstFullBook
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

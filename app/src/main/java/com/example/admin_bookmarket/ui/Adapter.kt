@@ -11,8 +11,6 @@ import com.example.admin_bookmarket.R
 import com.example.admin_bookmarket.RecyclerViewClickListener
 import com.example.admin_bookmarket.data.model.Book
 import com.example.admin_bookmarket.databinding.CardBookBinding
-import com.example.admin_bookmarket.databinding.ItemRcBinding
-import com.example.admin_bookmarket.model.BookDetailItem
 import com.google.android.material.card.MaterialCardView
 
 class Adapter(

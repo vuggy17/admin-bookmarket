@@ -1,20 +1,23 @@
 package com.example.admin_bookmarket
 
+
+import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.admin_bookmarket.ViewModel.ItemDetailViewModel
 import com.example.admin_bookmarket.data.model.Book
 import com.example.admin_bookmarket.databinding.ActivityItemDetailBinding
+import com.example.admin_bookmarket.ui.home.HomeFragment
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 import kotlin.math.roundToInt
+
 
 @AndroidEntryPoint
 class ItemDetailActivity : AppCompatActivity() {
@@ -35,6 +38,27 @@ class ItemDetailActivity : AppCompatActivity() {
         binding.idImgeURL.addTextChangedListener {
             binding.idImgeURL.text.toString()?.let { uri -> loadImageFromUri(Uri.parse(uri)) }
         }
+
+        binding.idDelete.setOnClickListener {
+            val builder = AlertDialog.Builder(this@ItemDetailActivity)
+            builder.setMessage("Are you sure you want to DELETE this book?")
+                .setCancelable(false)
+                .setPositiveButton("Yes") { dialog, id ->
+                    // Delete selected note from database
+                   deleteCurrentBook()
+                }
+                .setNegativeButton("No") { dialog, id ->
+                    dialog.dismiss()
+                }
+            val alert = builder.create()
+            alert.show()
+        }
+    }
+
+    private fun deleteCurrentBook()
+    {
+        viewModel.deleteBook(displayItem.id!!)
+        startActivity(Intent(baseContext, MainActivity::class.java))
     }
 
     private val changeObserver = Observer<Book> { value ->
@@ -81,4 +105,18 @@ class ItemDetailActivity : AppCompatActivity() {
             viewModel.updateToDb(displayItem.id!!, newBook)
         }
     }
+//    private fun AskOption(): android.app.AlertDialog? {
+//        return android.app.AlertDialog.Builder(this) // set message, title, and icon
+//            .setTitle("Delete")
+//            .setMessage("Do you want to Delete")
+//            .setIcon(R.drawable.delete)
+//            .setPositiveButton("Delete",
+//                DialogInterface.OnClickListener { dialog, whichButton ->
+//                    deleteCurrentBook()
+//                    dialog.dismiss()
+//                })
+//            .setNegativeButton("cancel",
+//                DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() })
+//            .create()
+//    }
 }

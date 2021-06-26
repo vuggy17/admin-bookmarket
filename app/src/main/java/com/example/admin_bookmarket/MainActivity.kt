@@ -20,7 +20,7 @@ import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -31,9 +31,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        val bottonNavActionView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-//        val navController = findNavController(R.id.fragment)
-//        bottonNavActionView.setupWithNavController(navController)
+        val bottonNavActionView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        bottonNavActionView.setupWithNavController(navController)
 
     }
 

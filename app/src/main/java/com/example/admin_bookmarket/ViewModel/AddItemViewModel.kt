@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class AddItemViewModel @Inject constructor(): ViewModel() {
 
-    fun addtoDb(newBook: MutableMap<String, String>)
+    fun addtoDb(newBook: MutableMap<String, Any>)
     {
         FirebaseFirestore.getInstance().collection("books").add(newBook)
     }

@@ -4,18 +4,20 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
 import com.example.admin_bookmarket.ViewModel.AddItemViewModel
 import com.example.admin_bookmarket.databinding.ActivityAddItemBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class AddItemActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityAddItemBinding
-    private var newBook: MutableMap<String, String> = mutableMapOf()
+    private var newBook: MutableMap<String, Any> = mutableMapOf()
     private val viewModel: AddItemViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +33,7 @@ class AddItemActivity : AppCompatActivity() {
             binding.idImgeURL.text.toString()?.let { uri -> loadImageFromUri(Uri.parse(uri)) }
         }
 
+
     }
 
     fun addNewBook()
@@ -40,8 +43,9 @@ class AddItemActivity : AppCompatActivity() {
             binding.idKind.text.toString() != "")
         {
             newBook =  mutableMapOf("Image" to binding.idImgeURL.text.toString(), "Name" to binding.idTitle.text.toString(),
-            "Author" to binding.idAuthor.text.toString(), "Price" to binding.idPrice.text.toString(), "rate" to "0",
-                "Kind" to binding.idKind.text.toString(), "Counts" to binding.idCount.text.toString(), "Description" to binding.idDescription.text.toString())
+            "Author" to binding.idAuthor.text.toString(), "Price" to binding.idPrice.text.toString().toDouble().roundToInt(), "rate" to "0".toDouble().roundToInt(),
+                "Kind" to binding.idKind.text.toString(), "Counts" to binding.idCount.text.toString().toDouble().roundToInt(), "Description" to binding.idDescription.text.toString())
+
             viewModel.addtoDb(newBook)
             binding.idCount.setText("", TextView.BufferType.EDITABLE)
             binding.idImgeURL.setText("", TextView.BufferType.EDITABLE)
@@ -51,6 +55,7 @@ class AddItemActivity : AppCompatActivity() {
             binding.idPrice.setText("", TextView.BufferType.EDITABLE)
             binding.idKind.setText("", TextView.BufferType.EDITABLE)
         }
+        Toast.makeText(this, "Add success", Toast.LENGTH_SHORT).show()
     }
     private fun loadImageFromUri(uri: Uri) {
         Glide

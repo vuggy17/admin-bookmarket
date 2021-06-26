@@ -34,16 +34,20 @@ class ItemDetailViewModel @Inject constructor( private val savedStateHandle: Sav
                     return
                 }
 
-                var bookItem: Book = Book(id.value,
-                    value?.data?.get("Image").toString(),
-                    value?.data?.get("Name").toString(),
-                    value?.data?.get("Author").toString(),
-                    value?.data?.get("Price").toString().toDouble().roundToInt(),
-                    value?.data?.get("rate").toString().toDouble().roundToInt(),
-                    value?.data?.get("Kind").toString(),
-                    value?.data?.get("Counts").toString().toDouble().roundToInt(),
-                    value?.data?.get("Description").toString())
-                book.value = bookItem
+                if (value?.data?.get("Image") != null) {
+                    var bookItem: Book = Book(
+                        id.value,
+                        value?.data?.get("Image").toString(),
+                        value?.data?.get("Name").toString(),
+                        value?.data?.get("Author").toString(),
+                        value?.data?.get("Price").toString().toDouble().roundToInt(),
+                        value?.data?.get("rate").toString().toDouble().roundToInt(),
+                        value?.data?.get("Kind").toString(),
+                        value?.data?.get("Counts").toString().toDouble().roundToInt(),
+                        value?.data?.get("Description").toString()
+                    )
+                    book.value = bookItem
+                }
             }
         })
     }
@@ -60,4 +64,8 @@ class ItemDetailViewModel @Inject constructor( private val savedStateHandle: Sav
 
     }
 
+    fun deleteBook(id: String)
+    {
+        FirebaseFirestore.getInstance().collection("books").document(id).delete()
+    }
 }

@@ -82,10 +82,11 @@
                     android:id="@+id/id_imgeURL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="top"
+                    android:gravity="center"
                     android:hint="ImageURL"
                     android:singleLine="true"
                     android:textSize="18dp"
+                    android:background="@android:color/transparent"
                     android:layout_marginHorizontal="24dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -117,6 +118,7 @@
                     android:hint="Num"
                     android:singleLine="true"
                     android:textSize="15dp"
+                    android:background="@android:color/transparent"
                     app:layout_constraintBottom_toTopOf="@+id/id_title"
                     app:layout_constraintStart_toEndOf="@id/tv_counts"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -128,6 +130,8 @@
                     android:layout_marginTop="45dp"
                     android:fontFamily="@font/roboto_bold"
                     android:hint="Title"
+                    android:background="@android:color/transparent"
+
                     android:textColor="#2A2A2A"
                     android:textSize="25dp"
                     android:textStyle="bold"
@@ -142,6 +146,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="Author"
+                    android:background="@android:color/transparent"
                     android:textColor="@color/fade_gray"
                     android:textSize="14dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -156,6 +161,7 @@
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/roboto_regular"
                     android:text="Kind"
+                    android:background="@android:color/transparent"
                     android:textColor="#0F52BA"
                     android:textSize="12dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -170,6 +176,8 @@
                     android:fontFamily="@font/roboto_bold"
                     android:hint="đ"
                     android:textSize="22dp"
+                    android:background="@android:color/transparent"
+
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1"
                     app:layout_constraintStart_toEndOf="@+id/id_kind"
@@ -235,6 +243,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_regular"
                     android:text="Add a description"
+                    android:background="@android:color/transparent"
                     android:textColor="@color/fade_gray"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -257,7 +266,7 @@
 
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/id_addCart"
+            android:id="@+id/id_delete"
             android:layout_width="64dp"
             android:layout_height="48dp"
             android:layout_gravity="center"

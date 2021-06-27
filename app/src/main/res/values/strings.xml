@@ -47,6 +47,12 @@
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut egestas in ligula a maximus. Mauris venenatis, neque vitae sollicitudin dapibus, dolor lorem tempor orci, eget viverra ante eros non sem. Nam maximus dignissim purus, ac cursus felis. Duis maximus odio nunc, nec dapibus ligula ultricies non. Aliquam efficitur sapien ut nisl aliquet, eget malesuada urna egestas. Nullam sed orci urna. Praesent iaculis dapibus urna, at rutrum ipsum aliquet at. Pellentesque pellentesque augue vel tortor convallis aliquam. Etiam porttitor id urna at dictum. Donec scelerisque auctor quam, id varius ligula. Aliquam eget nibh et urna dapibus vestibulum. Donec mauris ipsum, aliquet ut risus ac, efficitur porta tortor. Donec ac libero ut leo lobortis elementum. Nunc commodo metus nunc.\nPhasellus iaculis nisi a leo vehicula sodales. Fusce hendrerit quam eget tortor semper ultrices. Vivamus rhoncus molestie massa et volutpat. Proin cursus ex ac diam ornare consectetur. Curabitur vitae congue lectus. Pellentesque a purus fermentum, varius est vel, faucibus risus. Nullam vitae massa vitae diam fermentum condimentum vitae a sem. Etiam eu lorem a libero sollicitudin placerat.\nDuis sodales imperdiet quam, vitae laoreet ex fermentum non. Vivamus convallis magna in justo laoreet, a ornare enim sollicitudin. Nam laoreet neque eu tempus commodo. In sollicitudin enim sit amet rutrum posuere. Integer mattis aliquet posuere. Integer blandit mauris vel erat molestie faucibus. Ut non urna in urna interdum venenatis non sit amet urna. In ornare posuere risus et vestibulum."
 
     </string>
+    <string-array name="status">
+        <item>WAITING</item>
+        <item>CONFIRMED</item>
+        <item>DELIVERING</item>
+        <item>COMPLETE</item>
+    </string-array>
     <string name="fiction"> Fiction </string>
     <string name="profile">Profile</string>
     <string name="editprofile">Edit Profile</string>

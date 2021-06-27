@@ -31,45 +31,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/statusBox"
-                    style ="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                    app:boxStrokeWidthFocused="0dp"
-                    app:boxStrokeWidth="0dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_marginRight="10dp"
-                    android:textColor="@color/blue_light"
+                <TextView
+                    android:id="@+id/status"
                     android:textStyle="bold"
-                    app:hintEnabled="false"
-                    android:background="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                   android:textColor="@color/blue_light"
+                    android:textSize="14sp"
+                    android:layout_marginRight="10dp"
+                    android:text="WAITING"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/appCompatButton"
+                    app:layout_constraintEnd_toStartOf="@+id/update"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <AutoCompleteTextView
-                        android:padding="0dp"
-                        android:paddingLeft="0dp"
-                        android:paddingRight="0dp"
-                        android:id="@+id/status"
-                        android:background="@color/white"
-                        android:layout_weight="1"
-                        android:editable="false"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="RECEIVED"
-                        android:textSize="14dp"
-                        android:textColor="@color/blue_light"
-                        android:textStyle="bold" />
-                </com.google.android.material.textfield.TextInputLayout>
+                </TextView>
 
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/appCompatButton"
-                    android:layout_width="60dp"
+                    android:id="@+id/update"
+                    android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:background="@color/blue_light"
-                    android:text="update"
+                    android:background="@color/green"
+                    android:text="Confirm"
                     android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

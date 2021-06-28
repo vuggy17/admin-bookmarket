@@ -175,6 +175,32 @@
                 android:background="@color/less_black">
 
             </View>
+            <TextView
+                android:id="@+id/userReasonLayout"
+                android:layout_width="wrap_content"
+                android:textColor="@color/black"
+                android:visibility="gone"
+                android:textStyle="bold"
+                android:text="Reason cancel order:"
+                android:layout_height="wrap_content">
+
+            </TextView>
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/userReason"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#434343" />
+            <View
+                android:id="@+id/reasonLine"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/less_black">
+            </View>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

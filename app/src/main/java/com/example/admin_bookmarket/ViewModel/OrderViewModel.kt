@@ -85,6 +85,7 @@ class OrderViewModel @Inject constructor(private val orderRepository: OrderRepos
                     order.userDeliverAddress.phoneNumber = doc["phoneNumber"].toString()
                     order.userDeliverAddress.city = doc["city"].toString()
                     order.userDeliverAddress.district = doc["district"].toString()
+                    order.cancelReason = doc["reason"].toString()
                     val userMap = doc["user"] as HashMap<*, *>
                     order.currentUser = MyUser(
                         fullName = userMap["fullName"].toString(),

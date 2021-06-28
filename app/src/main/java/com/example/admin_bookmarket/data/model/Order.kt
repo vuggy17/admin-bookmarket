@@ -10,5 +10,6 @@ data class Order(
     var dateTime: String ="",
     var listbooks: ArrayList<Cart> = ArrayList(),
     var currentUser: MyUser = MyUser(),
+    var cancelReason: String =""
 
 )

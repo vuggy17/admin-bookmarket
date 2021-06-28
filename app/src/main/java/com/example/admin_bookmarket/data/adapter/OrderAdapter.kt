@@ -2,15 +2,15 @@ package com.example.admin_bookmarket.data.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.core.view.marginRight
-import androidx.core.widget.doOnTextChanged
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.admin_bookmarket.R
@@ -36,6 +36,7 @@ class OrderAdapter(
         val expandBill: Button = view.findViewById(R.id.expandBill)
         val addressLayout: LinearLayout = view.findViewById(R.id.addressLayout)
         val confirm: Button = view.findViewById(R.id.update)
+        val layout: CardView = view.findViewById(R.id.layout)
 
 
     }
@@ -66,20 +67,20 @@ class OrderAdapter(
         }
         holder.apply {
             val formatter = DecimalFormat("#,###")
-            status.text =currentOrder.status
-            if(currentOrder.status != "WAITING"){
+            status.text = currentOrder.status
+            if (currentOrder.status != "WAITING") {
                 confirm.isEnabled = false
                 confirm.setBackgroundColor(context.resources.getColor(R.color.disable))
+            } else {
+                confirm.isEnabled = true
+                confirm.setBackgroundColor(context.resources.getColor(R.color.green))
             }
-//            status.doOnTextChanged { text, start, before, count ->
-//                if(text != "WAITING"){
-//                    confirm.isEnabled = false
-//                    confirm.setBackgroundColor(context.resources.getColor(R.color.disable))
-//                }else{
-//                    confirm.isEnabled = true
-//                    confirm.setBackgroundColor(context.resources.getColor(R.color.green))
-//                }
-//            }
+            if (currentOrder.status == "CANCEL") {
+                confirm.isEnabled = false
+                confirm.setBackgroundColor(context.resources.getColor(R.color.disable))
+                layout.alpha = 0.7F
+            }
+
             name.text = currentOrder.userDeliverAddress.fullName
             phone.text = currentOrder.userDeliverAddress.phoneNumber
             address.text =
@@ -98,7 +99,7 @@ class OrderAdapter(
                 onExpandBillClick(listItemOrder, expandBill)
             }
             confirm.setOnClickListener {
-                currentOrder.status ="CONFIRMED"
+                currentOrder.status = "CONFIRMED"
                 status.text = currentOrder.status
                 confirm.isEnabled = false
                 confirm.setBackgroundColor(context.resources.getColor(R.color.disable))
@@ -128,6 +129,7 @@ class OrderAdapter(
             expandButton.setBackgroundResource(R.drawable.ic_baseline_expand_more_24)
         }
     }
+
     override fun getItemCount(): Int {
         return listOder.size
     }

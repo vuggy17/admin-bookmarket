@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.admin_bookmarket.data.adapter.DetailBillItemAdapter
@@ -46,6 +47,12 @@ class OrderDetail : AppCompatActivity() {
             orderItemBill.adapter = billAdapter
             orderItemBill.layoutManager = LinearLayoutManager(this.root.context)
             orderSum.text = formatter.format(currentOrder.totalPrince.toLong())+"đ"
+            if(currentOrder.status == "CANCEL"){
+                userReason.visibility = View.VISIBLE
+                userReasonLayout.visibility = View.VISIBLE
+                userReason.text = currentOrder.cancelReason
+                reasonLine.visibility = View.VISIBLE
+            }
 
         }
 

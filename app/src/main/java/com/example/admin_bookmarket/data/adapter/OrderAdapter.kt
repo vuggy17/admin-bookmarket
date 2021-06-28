@@ -71,12 +71,21 @@ class OrderAdapter(
                 confirm.isEnabled = false
                 confirm.setBackgroundColor(context.resources.getColor(R.color.disable))
             }
+//            status.doOnTextChanged { text, start, before, count ->
+//                if(text != "WAITING"){
+//                    confirm.isEnabled = false
+//                    confirm.setBackgroundColor(context.resources.getColor(R.color.disable))
+//                }else{
+//                    confirm.isEnabled = true
+//                    confirm.setBackgroundColor(context.resources.getColor(R.color.green))
+//                }
+//            }
             name.text = currentOrder.userDeliverAddress.fullName
             phone.text = currentOrder.userDeliverAddress.phoneNumber
             address.text =
                 currentOrder.userDeliverAddress.addressLane + ", " + currentOrder.userDeliverAddress.district + ", " + currentOrder.userDeliverAddress.city + "."
             dateTime.text = currentOrder.dateTime
-            totalPrice.text = formatter.format(currentOrder.totalPrince.toLong()) + "đ"
+            totalPrice.text = formatter.format(currentOrder.totalPrince.toString().toLong()) + "đ"
             val billingItemAdapter = BillingItemAdapter(currentOrder.listbooks)
             listItemOrder.adapter = billingItemAdapter
             listItemOrder.layoutManager = LinearLayoutManager(context)
@@ -91,11 +100,9 @@ class OrderAdapter(
             confirm.setOnClickListener {
                 currentOrder.status ="CONFIRMED"
                 status.text = currentOrder.status
-
                 confirm.isEnabled = false
                 confirm.setBackgroundColor(context.resources.getColor(R.color.disable))
             }
-
         }
     }
 
@@ -121,7 +128,6 @@ class OrderAdapter(
             expandButton.setBackgroundResource(R.drawable.ic_baseline_expand_more_24)
         }
     }
-
     override fun getItemCount(): Int {
         return listOder.size
     }

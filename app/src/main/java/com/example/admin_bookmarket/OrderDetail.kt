@@ -11,6 +11,7 @@ import com.example.admin_bookmarket.data.common.AppUtils
 import com.example.admin_bookmarket.data.model.Order
 import com.example.admin_bookmarket.databinding.ActivityOrderDetailBinding
 import com.example.admin_bookmarket.databinding.OrderItemBinding
+import java.text.DecimalFormat
 
 class OrderDetail : AppCompatActivity() {
 
@@ -33,6 +34,7 @@ class OrderDetail : AppCompatActivity() {
                 currentOrder.status,
                 false
             )
+            val formatter = DecimalFormat("#,###")
             userName.text = currentOrder.currentUser.fullName
             userEmail.text = currentOrder.currentUser.email
             userPhoneNumber.text =currentOrder.currentUser.phoneNumber
@@ -43,7 +45,7 @@ class OrderDetail : AppCompatActivity() {
             val billAdapter: DetailBillItemAdapter = DetailBillItemAdapter(currentOrder.listbooks)
             orderItemBill.adapter = billAdapter
             orderItemBill.layoutManager = LinearLayoutManager(this.root.context)
-            orderSum.text = currentOrder.totalPrince
+            orderSum.text = formatter.format(currentOrder.totalPrince.toLong())+"đ"
 
         }
 

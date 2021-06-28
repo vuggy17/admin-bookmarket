@@ -9,17 +9,23 @@ import com.example.admin_bookmarket.data.model.Cart
 import com.example.admin_bookmarket.data.model.MyUser
 import com.example.admin_bookmarket.data.model.Order
 import com.google.firebase.Timestamp
+import dagger.hilt.android.lifecycle.HiltViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
-class OrderViewModel@Inject constructor(private val orderRepository: OrderRepository) :
+@HiltViewModel
+class OrderViewModel @Inject constructor(private val orderRepository: OrderRepository) :
     ViewModel()  {
 
-    private var _order = MutableLiveData<MutableList<Order>>()
-    val orders get() = _order
+    private var _orders = MutableLiveData<MutableList<Order>>()
+    private var allOrderValue: MutableList<Order> = ArrayList()
+    private var _membersID = MutableLiveData<MutableList<String>>()
+    val orders get() = _orders
+
+
 
     private fun setBillingItem(userID: String, orderID: String) {
         orderRepository.getAllBillingIemFromDB(userId = userID, orderID).addSnapshotListener { value, error ->
@@ -36,46 +42,79 @@ class OrderViewModel@Inject constructor(private val orderRepository: OrderReposi
                     billingList.add(cart)
                 }
                 var orderList: MutableList<Order> = ArrayList()
-                for(order in _order.value!!){
+                for(order in _orders.value!!){
                     if(order.id == orderID){
                         order.listbooks = billingList
                     }
                     orderList.add(order)
                 }
-                _order.value = orderList
+                _orders.value = orderList
             }
         }
     }
 
+    fun getAllOrder(): MutableLiveData<MutableList<Order>>{
+        orderRepository.getAllUserFromDB().addSnapshotListener { value, error ->
+            if(error != null){
+                Log.w(Constants.VMTAG, "Listen failed.", error)
+            }else{
 
+                for(doc in value!!){
+                    getAllOrderOfId(doc.id)
+                }
 
-    private fun getAllOrderOfId(userId: String): MutableLiveData<MutableList<Order>> {
+            }
+        }
+        return orders
+    }
+
+     private fun getAllOrderOfId(userId: String) {
         orderRepository.getAllOrderFromDB(userId).addSnapshotListener { value, error ->
             if (error != null) {
                 Log.w(Constants.VMTAG, "Listen failed.", error)
             } else {
-                var orderList: MutableList<Order> = ArrayList()
                 for (doc in value!!) {
                     val order = Order()
                     order.id = doc.id
                     val timeStamp = doc["dateTime"] as Timestamp
                     order.dateTime = getFormatDate(timeStamp.toDate())
                     order.status = doc["status"].toString()
-                    order.totalPrince = doc["totalPrince"].toString() +" đ"
+                    order.totalPrince = doc["totalPrince"].toString()
                     order.userDeliverAddress.addressLane = doc["addressLane"].toString()
                     order.userDeliverAddress.fullName = doc["fullName"].toString()
                     order.userDeliverAddress.phoneNumber = doc["phoneNumber"].toString()
                     order.userDeliverAddress.city = doc["city"].toString()
                     order.userDeliverAddress.district = doc["district"].toString()
-                   //Get user here
+                    val userMap = doc["user"] as HashMap<*, *>
+                    order.currentUser = MyUser(
+                        fullName = userMap["fullName"].toString(),
+                        gender = userMap["gender"].toString(),
+                        birthDay = userMap["birthDay"].toString(),
+                        phoneNumber = userMap["phoneNumber"].toString(),
+                        addressLane = userMap["addressLane"].toString(),
+                        city = userMap["city"].toString(),
+                        district = userMap["district"].toString(),
+                    )
+                    order.currentUser.email = doc["userId"].toString()
                     setBillingItem( userId, orderID = order.id)
-                    orderList.add(order)
+                    isExitsInAllOrder(order)
+                    allOrderValue.add(order)
+
                 }
-                orders.value = orderList
+                orders.value = allOrderValue
             }
         }
-        return orders
     }
+    private fun isExitsInAllOrder(newOrder: Order): Boolean{
+        for(order in allOrderValue){
+            if(order.id == newOrder.id){
+                allOrderValue.remove(order)
+                return true
+            }
+        }
+        return false
+    }
+
     private fun getFormatDate(date: Date):String{
         val sdf = SimpleDateFormat("HH:mm:ss dd-MM-yyyy ")
         return sdf.format(date)

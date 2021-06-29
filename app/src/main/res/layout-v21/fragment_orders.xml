@@ -58,8 +58,11 @@
             android:backgroundTint="@color/blue_light"
             android:contentDescription="@string/all_function"
             android:src="@drawable/ic_baseline_timeline_24"
-            android:tint="@color/white"
+            app:tint="@android:color/white"
+            android:clickable="true"
+            android:focusable="true"
             app:fabSize="normal"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.045"

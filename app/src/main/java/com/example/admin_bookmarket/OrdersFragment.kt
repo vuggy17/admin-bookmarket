@@ -45,6 +45,9 @@ class OrdersFragment : Fragment(), RecyclerViewClickListener {
         }
         (activity as AppCompatActivity).setSupportActionBar(binding.toolBar)
         setHasOptionsMenu(true)
+        binding.option.setOnClickListener {
+            startActivity(Intent(binding.root.context, StatisticActivity::class.java))
+        }
 
         return binding.root
     }
@@ -52,6 +55,7 @@ class OrdersFragment : Fragment(), RecyclerViewClickListener {
     private fun getOrders(orderAdapter: OrderAdapter) {
         viewModel.getAllOrder().observe(this.viewLifecycleOwner, { changes ->
             showList = changes
+            AppUtils.oderList = changes
             if (listStatus != "") {
                 orderAdapter.addOrder(filterList(showList, listStatus))
             } else {
@@ -69,7 +73,6 @@ class OrdersFragment : Fragment(), RecyclerViewClickListener {
             }
         }
         return filterOrderList
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -78,11 +81,7 @@ class OrdersFragment : Fragment(), RecyclerViewClickListener {
     }
 
     override fun recyclerViewListClicked(v: View?, id: String) {
-        Toast.makeText(
-            this.requireContext(),
-            AppUtils.currentOrder.id.toString(),
-            Toast.LENGTH_LONG
-        ).show()
+
         startActivity(Intent(binding.root.context, OrderDetail::class.java))
     }
 

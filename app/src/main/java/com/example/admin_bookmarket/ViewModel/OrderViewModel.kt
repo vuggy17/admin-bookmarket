@@ -18,7 +18,7 @@ import kotlin.math.roundToInt
 
 @HiltViewModel
 class OrderViewModel @Inject constructor(private val orderRepository: OrderRepository) :
-    ViewModel()  {
+    ViewModel() {
 
     private var _orders = MutableLiveData<MutableList<Order>>()
     private var allOrderValue: MutableList<Order> = ArrayList()
@@ -26,40 +26,40 @@ class OrderViewModel @Inject constructor(private val orderRepository: OrderRepos
     val orders get() = _orders
 
 
-
     private fun setBillingItem(userID: String, orderID: String) {
-        orderRepository.getAllBillingIemFromDB(userId = userID, orderID).addSnapshotListener { value, error ->
+        orderRepository.getAllBillingIemFromDB(userId = userID, orderID)
+            .addSnapshotListener { value, error ->
+                if (error != null) {
+                    Log.w(Constants.VMTAG, "Listen failed.", error)
+                } else {
+                    var billingList: ArrayList<Cart> = ArrayList()
+                    for (doc in value!!) {
+                        var cart: Cart = Cart()
+                        cart.numbers = doc["Quantity"].toString().toDouble().roundToInt()
+                        cart.name = doc["title"].toString()
+                        cart.price = doc["price"].toString().toLong()
+                        cart.id = doc.id
+                        billingList.add(cart)
+                    }
+                    var orderList: MutableList<Order> = ArrayList()
+                    for (order in _orders.value!!) {
+                        if (order.id == orderID) {
+                            order.listbooks = billingList
+                        }
+                        orderList.add(order)
+                    }
+                    _orders.value = orderList
+                }
+            }
+    }
+
+    fun getAllOrder(): MutableLiveData<MutableList<Order>> {
+        orderRepository.getAllUserFromDB().addSnapshotListener { value, error ->
             if (error != null) {
                 Log.w(Constants.VMTAG, "Listen failed.", error)
             } else {
-                var billingList: ArrayList<Cart> = ArrayList()
+
                 for (doc in value!!) {
-                    var cart: Cart = Cart()
-                    cart.numbers = doc["Quantity"].toString().toDouble().roundToInt()
-                    cart.name = doc["title"].toString()
-                    cart.price = doc["price"].toString().toLong()
-                    cart.id = doc.id
-                    billingList.add(cart)
-                }
-                var orderList: MutableList<Order> = ArrayList()
-                for(order in _orders.value!!){
-                    if(order.id == orderID){
-                        order.listbooks = billingList
-                    }
-                    orderList.add(order)
-                }
-                _orders.value = orderList
-            }
-        }
-    }
-
-    fun getAllOrder(): MutableLiveData<MutableList<Order>>{
-        orderRepository.getAllUserFromDB().addSnapshotListener { value, error ->
-            if(error != null){
-                Log.w(Constants.VMTAG, "Listen failed.", error)
-            }else{
-
-                for(doc in value!!){
                     getAllOrderOfId(doc.id)
                 }
 
@@ -68,7 +68,7 @@ class OrderViewModel @Inject constructor(private val orderRepository: OrderRepos
         return orders
     }
 
-     private fun getAllOrderOfId(userId: String) {
+    private fun getAllOrderOfId(userId: String) {
         orderRepository.getAllOrderFromDB(userId).addSnapshotListener { value, error ->
             if (error != null) {
                 Log.w(Constants.VMTAG, "Listen failed.", error)
@@ -97,31 +97,35 @@ class OrderViewModel @Inject constructor(private val orderRepository: OrderRepos
                         district = userMap["district"].toString(),
                     )
                     order.currentUser.email = doc["userId"].toString()
-                    setBillingItem( userId, orderID = order.id)
-                    isExitsInAllOrder(order)
-                    allOrderValue.add(order)
-
+                    setBillingItem(userId, orderID = order.id)
+                    if (isExitsInAllOrder(order) == null) {
+                        allOrderValue.add(order)
+                    }else{
+                        allOrderValue[allOrderValue.indexOf(isExitsInAllOrder(order))] = order
+                    }
+                    orders.value = allOrderValue
                 }
-                orders.value = allOrderValue
             }
         }
     }
-    private fun isExitsInAllOrder(newOrder: Order): Boolean{
-        for(order in allOrderValue){
-            if(order.id == newOrder.id){
-                allOrderValue.remove(order)
+        private fun isExitsInAllOrder(newOrder: Order): Order? {
+            for (order in allOrderValue) {
+                if (order.id == newOrder.id) {
+                    return order
+                }
+            }
+            return null
+        }
+
+        private fun getFormatDate(date: Date): String {
+            val sdf = SimpleDateFormat("HH:mm:ss dd-MM-yyyy ")
+            return sdf.format(date)
+        }
+
+        fun updateUserStatus(userId: String, docId: String, status: String): Boolean {
+            if(orderRepository.updateOrderStatus(userId, docId, status)){
                 return true
             }
+            return false
         }
-        return false
     }
-
-    private fun getFormatDate(date: Date):String{
-        val sdf = SimpleDateFormat("HH:mm:ss dd-MM-yyyy ")
-        return sdf.format(date)
-    }
-
-    fun updateUserStatus(userId: String, docId: String, status: String){
-        orderRepository.updateOrderStatus(userId, docId, status)
-    }
-}

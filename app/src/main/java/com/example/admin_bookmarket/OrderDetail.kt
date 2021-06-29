@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -30,6 +31,15 @@ class OrderDetail : AppCompatActivity() {
         binding = ActivityOrderDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setUpView()
+        binding.backClick.setOnClickListener {
+            onBackPressed()
+
+        }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 
     private val currentOrder: Order = AppUtils.currentOrder
@@ -137,6 +147,8 @@ class OrderDetail : AppCompatActivity() {
                 setUpUpdateButton(false,"UPDATE")
             }
         }
-        viewModel.updateUserStatus(currentOrder.currentUser.email, currentOrder.id, currentOrder.status)
+        if(viewModel.updateUserStatus(currentOrder.currentUser.email, currentOrder.id, currentOrder.status)){
+            Toast.makeText(this, "update success", Toast.LENGTH_SHORT).show()
+        }
     }
 }

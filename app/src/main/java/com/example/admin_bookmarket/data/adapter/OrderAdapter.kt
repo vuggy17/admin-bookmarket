@@ -15,15 +15,24 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.admin_bookmarket.R
 import com.example.admin_bookmarket.RecyclerViewClickListener
+import com.example.admin_bookmarket.ViewModel.OrderViewModel
+import com.example.admin_bookmarket.data.OrderRepository
 import com.example.admin_bookmarket.data.common.AppUtils
+import com.example.admin_bookmarket.data.common.Constants
 import com.example.admin_bookmarket.data.model.Order
+import com.google.firebase.firestore.CollectionReference
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.DecimalFormat
+import javax.inject.Inject
+
 
 class OrderAdapter(
     var listOder: MutableList<Order>,
     var context: Context,
-    private val itemListener: RecyclerViewClickListener
+    private val itemListener: RecyclerViewClickListener,
+    private val viewModel: OrderViewModel
 ) : RecyclerView.Adapter<OrderAdapter.ViewHolder>() {
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val status: TextView = view.findViewById(R.id.status)
         val dateTime: TextView = view.findViewById(R.id.dateTime)
@@ -71,15 +80,17 @@ class OrderAdapter(
             if (currentOrder.status != "WAITING") {
                 confirm.isEnabled = false
                 confirm.setBackgroundColor(context.resources.getColor(R.color.disable))
+                if (currentOrder.status == "CANCEL") {
+                    layout.alpha = 0.7F
+                }else{
+                    layout.alpha = 1F
+                }
             } else {
                 confirm.isEnabled = true
                 confirm.setBackgroundColor(context.resources.getColor(R.color.green))
+                layout.alpha = 1F
             }
-            if (currentOrder.status == "CANCEL") {
-                confirm.isEnabled = false
-                confirm.setBackgroundColor(context.resources.getColor(R.color.disable))
-                layout.alpha = 0.7F
-            }
+
 
             name.text = currentOrder.userDeliverAddress.fullName
             phone.text = currentOrder.userDeliverAddress.phoneNumber
@@ -99,6 +110,7 @@ class OrderAdapter(
                 onExpandBillClick(listItemOrder, expandBill)
             }
             confirm.setOnClickListener {
+                viewModel.updateUserStatus(currentOrder.currentUser.email,currentOrder.id,"CONFIRMED")
                 currentOrder.status = "CONFIRMED"
                 status.text = currentOrder.status
                 confirm.isEnabled = false

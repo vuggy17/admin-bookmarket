@@ -34,7 +34,7 @@ class OrdersFragment : Fragment(), RecyclerViewClickListener {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentOrdersBinding.inflate(inflater, container, false)
-        val orderListAdapter: OrderAdapter = OrderAdapter(mutableListOf(), this.requireContext(), this)
+        val orderListAdapter: OrderAdapter = OrderAdapter(mutableListOf(), this.requireContext(), this,viewModel)
         getOrders(orderListAdapter)
         binding.ordersList.apply {
             adapter = orderListAdapter

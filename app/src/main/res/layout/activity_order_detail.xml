@@ -122,7 +122,7 @@
                     app:boxStrokeWidthFocused="0dp"
                     app:hintEnabled="false"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/appCompatButton"
+                    app:layout_constraintEnd_toStartOf="@+id/updateButton"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <AutoCompleteTextView
@@ -143,8 +143,8 @@
 
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/appCompatButton"
-                    android:layout_width="60dp"
+                    android:id="@+id/updateButton"
+                    android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:background="@color/blue_light"
                     android:text="update"

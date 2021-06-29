@@ -120,4 +120,8 @@ class OrderViewModel @Inject constructor(private val orderRepository: OrderRepos
         val sdf = SimpleDateFormat("HH:mm:ss dd-MM-yyyy ")
         return sdf.format(date)
     }
+
+    fun updateUserStatus(userId: String, docId: String, status: String){
+        orderRepository.updateOrderStatus(userId, docId, status)
+    }
 }

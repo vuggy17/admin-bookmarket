@@ -30,8 +30,8 @@ class OrderRepository @Inject constructor(
                 Query.Direction.ASCENDING
             )
     }
-    fun updateOrder(userId: String){
-        userCollRef.document(userId).update("password", 1)
+    fun updateOrderStatus(userId: String, docId: String, status: String){
+        userCollRef.document(userId).collection(TAG).document(docId).update("status", status)
     }
 
 }

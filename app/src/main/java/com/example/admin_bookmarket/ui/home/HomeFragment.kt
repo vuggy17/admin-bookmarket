@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.admin_bookmarket.AddItemActivity
 import com.example.admin_bookmarket.ItemDetailActivity
 import com.example.admin_bookmarket.RecyclerViewClickListener
 import com.example.admin_bookmarket.SearchActivity
@@ -41,6 +42,9 @@ class HomeFragment : Fragment(), RecyclerViewClickListener {
             layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
             addItemDecoration(MarginItemDecoration(spaceSize = 15, spanCount = 2))
             adapter = bookAdapter
+        }
+        binding.option.setOnClickListener {
+            startActivity(Intent(context, AddItemActivity::class.java))
         }
         homeViewModel.lstCurrentBook.observe(viewLifecycleOwner, changeObserver)
 

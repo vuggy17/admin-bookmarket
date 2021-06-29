@@ -116,6 +116,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="top"
                     android:hint="Num"
+                    android:inputType="number"
                     android:singleLine="true"
                     android:background="@android:color/transparent"
                     android:textSize="15dp"
@@ -168,18 +169,34 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/id_author" />
 
-                <EditText
-                    android:id="@+id/id_price"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/ln_price"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_bold"
-                    android:hint="đ"
-                    android:textSize="22dp"
-                    android:background="@android:color/transparent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1"
-                    app:layout_constraintStart_toEndOf="@+id/id_kind"
-                    app:layout_constraintTop_toBottomOf="@+id/id_author" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/id_author"
+                    android:gravity="right">
+
+                    <EditText
+                        android:id="@+id/id_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@font/roboto_bold"
+                        android:hint="Price"
+                        android:layout_marginRight="5dp"
+                        android:inputType="number"
+                        android:textSize="22dp"/>
+
+                    <TextView
+                        android:id="@+id/tvĐ"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="đ"
+                        android:textSize="22dp" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/id_review"
@@ -201,7 +218,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1"
                     app:layout_constraintStart_toEndOf="@+id/id_review"
-                    app:layout_constraintTop_toBottomOf="@+id/id_price">
+                    app:layout_constraintTop_toBottomOf="@+id/ln_price">
 
                     <TextView
                         android:id="@+id/id_rate"

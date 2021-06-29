@@ -33,6 +33,9 @@ class AddItemActivity : AppCompatActivity() {
             binding.idImgeURL.text.toString()?.let { uri -> loadImageFromUri(Uri.parse(uri)) }
         }
 
+        binding.idBack.setOnClickListener {
+            onBackPressed()
+        }
 
     }
 

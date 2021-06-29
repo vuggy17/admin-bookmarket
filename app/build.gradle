@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.admin_bookmarket"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -84,4 +84,6 @@ dependencies {
     implementation 'androidx.activity:activity-ktx:1.2.3'
     implementation 'com.makeramen:roundedimageview:2.3.0'
     implementation 'com.android.support:multidex:1.0.3'
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.22'
+    implementation 'com.google.firebase:firebase-auth-ktx'
 }

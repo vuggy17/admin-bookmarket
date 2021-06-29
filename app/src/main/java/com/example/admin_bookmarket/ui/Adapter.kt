@@ -1,5 +1,6 @@
 package com.example.admin_bookmarket.ui
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,15 +46,14 @@ class Adapter(
         val item = values[position]
         holder.bookName.text = item.Name
         holder.bookAuthor.text = item.Author
-        holder.bookCount.text = item.Counts.toString()
-        holder.bookPrice.text = item.Price.toString()
+        holder.bookCount.text = item.rate.toString()
+        holder.bookPrice.text = item.Price.toString() + " đ"
         Glide
             .with(holder.itemView)
             .load(item.Image)
             .centerCrop()
             .placeholder(R.drawable.ic_launcher_background)
             .into(holder.bookImage);
-
     }
 
     override fun getItemCount(): Int = values.size

@@ -1,59 +1,103 @@
 package com.example.admin_bookmarket
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.*
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.admin_bookmarket.ViewModel.OrderViewModel
+import com.example.admin_bookmarket.data.adapter.OrderAdapter
+import com.example.admin_bookmarket.data.common.AppUtils
+import com.example.admin_bookmarket.data.model.Order
+import com.example.admin_bookmarket.databinding.FragmentOrdersBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [OrdersFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class OrdersFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+@AndroidEntryPoint
+class OrdersFragment : Fragment(), RecyclerViewClickListener {
+    private lateinit var binding: FragmentOrdersBinding
+    private val viewModel: OrderViewModel by activityViewModels()
+    private lateinit var orderListAdapter: OrderAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
+
+    private var showList: MutableList<Order> = ArrayList()
+    private var listStatus: String = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_orders, container, false)
+        binding = FragmentOrdersBinding.inflate(inflater, container, false)
+        orderListAdapter =
+            OrderAdapter(mutableListOf(), this.requireContext(), this, viewModel)
+        getOrders(orderListAdapter)
+        binding.ordersList.apply {
+            adapter = orderListAdapter
+            layoutManager = LinearLayoutManager(binding.root.context)
+        }
+        (activity as AppCompatActivity).setSupportActionBar(binding.toolBar)
+        setHasOptionsMenu(true)
+        binding.option.setOnClickListener {
+            startActivity(Intent(binding.root.context, StatisticActivity::class.java))
+        }
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment OrdersFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            OrdersFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    private fun getOrders(orderAdapter: OrderAdapter) {
+        viewModel.getAllOrder().observe(this.viewLifecycleOwner, { changes ->
+            showList = changes
+            AppUtils.oderList = changes
+            if (listStatus != "") {
+                orderAdapter.addOrder(filterList(showList, listStatus))
+            } else {
+                orderAdapter.addOrder(showList)
             }
+
+        })
     }
+
+    private fun filterList(orderList: MutableList<Order>, condition: String): MutableList<Order> {
+        val filterOrderList: MutableList<Order> = ArrayList()
+        for (order in orderList) {
+            if (order.status == condition) {
+                filterOrderList.add(order)
+            }
+        }
+        return filterOrderList
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.filter_menu, menu)
+        //super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun recyclerViewListClicked(v: View?, id: String) {
+
+        startActivity(Intent(binding.root.context, OrderDetail::class.java))
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.waiting -> listStatus ="WAITING"
+            R.id.confirmed ->listStatus="CONFIRMED"
+            R.id.delivering -> listStatus ="DELIVERING"
+            R.id.complete -> listStatus ="COMPLETE"
+            R.id.cancel ->listStatus ="CANCEL"
+        }
+        if(listStatus!=""){
+            orderListAdapter.addOrder(filterList(showList, listStatus))
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+
 }

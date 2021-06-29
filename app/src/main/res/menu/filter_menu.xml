@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:icon="@drawable/ic_baseline_filter_list_24"
+        android:iconTint="@color/white"
+        android:title="Log out"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/waiting"
+                android:icon="@drawable/ic_baseline_timelapse_24"
+
+                app:showAsAction="always"
+                android:title="Waiting orders" />
+            <item
+                android:id="@+id/confirmed"
+                android:icon="@drawable/ic_baseline_description_24"
+                app:showAsAction="always"
+                android:title="Confirmed orders" />
+            <item
+                android:id="@+id/delivering"
+                android:icon="@drawable/ic_baseline_directions_bus_24"
+                app:showAsAction="always"
+                android:title="Delivering orders" />
+            <item
+                android:id="@+id/complete"
+                android:icon="@drawable/ic_baseline_check_24"
+                app:showAsAction="always"
+                android:title="Complete orders" />
+            <item
+                android:id="@+id/cancel"
+                android:icon="@drawable/ic_baseline_cancel_24"
+                app:showAsAction="always"
+                android:title="Cancel orders" />
+        </menu>
+    </item>
+
+</menu>

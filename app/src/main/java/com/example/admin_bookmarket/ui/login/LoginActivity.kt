@@ -49,10 +49,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var loadDialog: LoadDialog
 
-    // tạo biến account để lưu về thông tin khách hàng đã có
-//    companion object {
-//        var recentAccountLogin: AppAccount = AppAccount("", "", User())
-//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,28 +59,28 @@ class LoginActivity : AppCompatActivity() {
         loginPasswordLayout = findViewById(R.id.LoginPasswordLayout)
         loginPassword = findViewById(R.id.LoginPassword)
         loginButton = findViewById(R.id.loginButton)
-//        val forgotPassword: TextView = findViewById(R.id.forgotPassword)
-
-//        forgotPassword.setOnClickListener {
-//            startActivity(Intent(baseContext, ForgotPassword::class.java))
-//            finish()
-//        }
-
-
+        val resetPassword: TextView = findViewById(R.id.resetPass)
+        resetPassword.setOnClickListener {
+            startActivity(Intent(baseContext, ForgotPassword::class.java))
+        }
+        loginPassword.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus){
+                loginPasswordLayout.error = null
+            }
+        }
         loginButton.setOnClickListener {
             onButtonLoginClick()
-
         }
 
-//        val imgBackArrow: AppCompatImageView = findViewById(R.id.imgBackArrow)
-//        imgBackArrow.setOnClickListener {
-//            startActivity(Intent(baseContext, WelcomeActivity::class.java))
-//        }
     }
 
-//    override fun onBackPressed() {
-//        startActivity(Intent(baseContext, WelcomeActivity::class.java))
-//    }
+    override fun onStart() {
+        super.onStart()
+        if(Firebase.auth.currentUser != null){
+            loginEmail.setText(Firebase.auth.currentUser!!.email.toString())
+        }
+
+    }
 
     private fun onButtonLoginClick() {
 
@@ -104,13 +100,13 @@ class LoginActivity : AppCompatActivity() {
                     auth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this) { task ->
                             if (task.isSuccessful) {
-//                                loadData(email)
                                 FullBookList.getInstance()
                                 loadDialog.dismissDialog()
                                 startActivity(Intent(baseContext, MainActivity::class.java))
                                 finish()
                             } else {
                                 loginPasswordLayout.error = task.exception!!.message.toString()
+                                loginPassword.clearFocus()
                                 loadDialog.dismissDialog()
                             }
                         }
@@ -122,36 +118,6 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
-
-
-//    private fun loadData(email: String) {
-//        dbAccountsReference.document(email).get()
-//            .addOnSuccessListener { result ->
-//                val userMap = result["user"] as HashMap<*, *>
-//                val recentUser: User = User(
-//                    fullName = userMap["fullName"].toString(),
-//                    gender = userMap["gender"].toString(),
-//                    birthDay = userMap["birthDay"].toString(),
-//                    phoneNumber = userMap["phoneNumber"].toString(),
-//                    addressLane = userMap["addressLane"].toString(),
-//                    city = userMap["city"].toString(),
-//                    district = userMap["district"].toString(),
-//                )
-//                AppUtil.currentUser = recentUser
-//                AppUtil.currentAccount = AppAccount(
-//                    result["email"].toString(),
-//                    result["password"].toString(),
-//                    recentUser
-//                )
-////                LoginActivity.recentAccountLogin = AppAccount(
-////                    result["email"].toString(),
-////                    result["password"].toString(),
-////                    recentUser
-////                )
-//                startActivity(Intent(baseContext, MainActivity::class.java))
-//                finish()
-//            }
-//    }
 
 
 
@@ -170,10 +136,12 @@ class LoginActivity : AppCompatActivity() {
 
         return if (loginPassword.text.isEmpty()) {
             loginPasswordLayout.error = "Password can not empty"
+            loginPassword.clearFocus()
             false
         } else {
             if (loginPassword.text.count() < 8) {
                 loginPasswordLayout.error = "Password must have more than 8 character"
+                loginPassword.clearFocus()
                 false
             } else {
                 loginPasswordLayout.error = null

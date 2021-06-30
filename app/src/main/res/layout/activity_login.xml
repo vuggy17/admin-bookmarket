@@ -8,15 +8,14 @@
         android:orientation="vertical"
         tools:context=".ui.login.LoginActivity">
 
-
-
         <TextView
             android:id="@+id/label"
             style="@style/tv_28_bold"
+            android:textSize="40sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="88dp"
+            android:layout_marginTop="70dp"
             android:text="@string/login"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -25,12 +24,12 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="15dp"
             android:contentDescription="login-image"
-            android:src="@drawable/ic_login_rafiki"
+            android:src="@drawable/admin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/label" />
@@ -40,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -140,10 +139,22 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
             </com.google.android.material.textfield.TextInputLayout>
-
-
-
         </LinearLayout>
+
+    <TextView
+        android:id="@+id/resetPass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Reset password"
+        android:textSize="12sp"
+        android:textColor="@color/blue_light"
+        android:paddingBottom="10dp"
+        android:layout_marginHorizontal="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/loginButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/formLogin">
+
+    </TextView>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/loginButton"
@@ -152,7 +163,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginHorizontal="50dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/bg_button_gradient"
             android:elevation="12dp"
             android:fontFamily="@font/roboto_medium"

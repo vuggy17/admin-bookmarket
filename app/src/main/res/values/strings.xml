@@ -34,7 +34,7 @@
     <string name="wellcome_slogan">Wellcome to bookmaket</string>
 
     <string name="register">Register</string>
-    <string name="login">Login</string>
+    <string name="login">Admin login</string>
     <string name="email">Email</string>
     <string name="don_t_have_account">Don\'t have account?</string>
     <string name="sign_up">Sign up</string>

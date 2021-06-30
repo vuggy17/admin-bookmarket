@@ -26,8 +26,6 @@ class OrdersFragment : Fragment(), RecyclerViewClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
-
-
     private var showList: MutableList<Order> = ArrayList()
     private var listStatus: String = ""
     override fun onCreateView(

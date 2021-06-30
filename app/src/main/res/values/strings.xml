@@ -53,6 +53,14 @@
         <item>DELIVERING</item>
         <item>COMPLETE</item>
     </string-array>
+    <string-array name="kind">
+        <item>Comic</item>
+        <item>Fiction</item>
+        <item>Novel</item>
+        <item>Business</item>
+        <item>Technology</item>
+        <item>Art</item>
+    </string-array>
     <string name="fiction"> Fiction </string>
     <string name="profile">Profile</string>
     <string name="editprofile">Edit Profile</string>

@@ -37,11 +37,11 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
+                        android:background="@drawable/add_new_book"
                         android:id="@+id/id_tnBackground"
                         android:layout_width="match_parent"
                         android:layout_height="380dp"
                         android:alpha="0.5"
-                        android:background="@drawable/bookimage"
                         android:scaleX="1"
                         android:scaleY="1" />
                 </LinearLayout>
@@ -72,63 +72,59 @@
                     android:id="@+id/id_thumbnail"
                     android:layout_width="180dp"
                     android:layout_height="260dp"
-                    android:src="@drawable/bookimage"
+                    android:src="@drawable/add_new_book"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <EditText
-                    android:id="@+id/id_imgeURL"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:hint="ImageURL"
-                    android:singleLine="true"
-                    android:textSize="18dp"
-                    android:background="@android:color/transparent"
-                    android:layout_marginHorizontal="24dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/id_thumbnail" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
+                android:layout_marginHorizontal="20dp"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_linear_layout_item_info"
-                android:padding="24dp">
+                >
 
-                <TextView
-                    android:id="@+id/tv_counts"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Num of books: "
-                    android:layout_marginTop="15dp"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintEnd_toStartOf="@+id/id_Count"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent">
+                    <TextView
+                        android:id="@+id/tv_counts"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Num of books: "
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintEnd_toStartOf="@+id/id_Count"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <EditText
-                    android:id="@+id/id_Count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="top"
-                    android:hint="Num"
-                    android:inputType="number"
-                    android:singleLine="true"
-                    android:background="@android:color/transparent"
-                    android:textSize="15dp"
-                    app:layout_constraintBottom_toTopOf="@+id/id_title"
-                    app:layout_constraintStart_toEndOf="@id/tv_counts"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <EditText
+                        android:id="@+id/id_Count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="top"
+                        android:hint="Num"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:background="@android:color/transparent"
+                        android:textSize="14sp"
+                         />
+                </LinearLayout>
+
 
                 <EditText
                     android:id="@+id/id_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="45dp"
+                    android:layout_marginTop="10dp"
                     android:fontFamily="@font/roboto_bold"
                     android:hint="Title"
                     android:textColor="#2A2A2A"
@@ -154,20 +150,45 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/id_title" />
 
-                <EditText
-                    android:id="@+id/id_kind"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/roboto_regular"
-                    android:hint="Kind"
-                    android:textColor="#0F52BA"
-                    android:textSize="12dp"
-                    android:background="@android:color/transparent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/id_author" />
+                <LinearLayout
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="Kind: "
+                        android:layout_height="wrap_content"/>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/statusBox"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/white"
+
+                        android:textStyle="bold"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
+                        app:hintEnabled="false"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/updateButton"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/id_kind"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@color/white"
+                            android:editable="false"
+                            android:padding="0dp"
+                            android:paddingLeft="0dp"
+                            android:paddingRight="0dp"
+                            android:text="Kind"
+                            android:textColor="@color/fade_gray"
+                            android:textSize="14dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/ln_price"
@@ -197,45 +218,52 @@
                         android:text="đ"
                         android:textSize="22dp" />
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/id_review"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_regular"
-                    android:text="Purchases"
-                    android:textSize="14dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.008"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/id_kind" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:orientation="horizontal"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1"
-                    app:layout_constraintStart_toEndOf="@+id/id_review"
-                    app:layout_constraintTop_toBottomOf="@+id/ln_price">
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/id_rate"
+                        android:id="@+id/id_review"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_regular"
-                        android:text="0"
-                        android:textColor="#FFC107"
-                        android:textSize="12dp" />
+                        android:text="Purchases"
+                        android:textSize="14dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                    <ImageView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:src="@drawable/star"
-                        android:layout_marginLeft="5dp" />
-                </LinearLayout>
+                        android:layout_gravity="right"
+                        android:orientation="horizontal"
+
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/id_rate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_regular"
+                            android:text="0"
+                            android:textColor="#FFC107"
+                            android:textSize="12dp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:src="@drawable/star" />
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 <TextView
                     android:id="@+id/textView"
@@ -252,6 +280,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/id_review" />
 
                 <EditText
+                    android:layout_marginTop="5dp"
                     android:justificationMode="inter_word"
                     android:id="@+id/id_description"
                     android:layout_width="match_parent"
@@ -263,7 +292,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

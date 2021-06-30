@@ -1,21 +1,25 @@
 package com.example.admin_bookmarket
 
+import android.annotation.SuppressLint
 import android.content.ContentResolver
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.webkit.MimeTypeMap
+import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doOnTextChanged
 import com.bumptech.glide.Glide
 import com.example.admin_bookmarket.ViewModel.AddItemViewModel
 import com.example.admin_bookmarket.databinding.ActivityAddItemBinding
+import com.example.admin_bookmarket.ui.login.LoadDialog
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.DecimalFormat
 import kotlin.math.roundToInt
 
 @AndroidEntryPoint
@@ -25,24 +29,21 @@ class AddItemActivity : AppCompatActivity() {
 
     private val reference: StorageReference = FirebaseStorage.getInstance().reference
     private var imageUri: Uri? = null
-
+    private lateinit var loadDialog: LoadDialog
     lateinit var binding: ActivityAddItemBinding
     private var newBook: MutableMap<String, Any> = mutableMapOf()
     private val viewModel: AddItemViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_item)
-
         binding = ActivityAddItemBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setContentView(binding.root)
+
         binding.idAddBook.setOnClickListener {
-            //addNewBook()
             pushImageToStorage()
         }
-        binding.idImgeURL.addTextChangedListener {
-            binding.idImgeURL.text.toString()?.let { uri -> loadImageFromUri(Uri.parse(uri)) }
-        }
+
 
         binding.idBack.setOnClickListener {
             onBackPressed()
@@ -50,29 +51,48 @@ class AddItemActivity : AppCompatActivity() {
         binding.idThumbnail.setOnClickListener {
             openGallery()
         }
+        val statusValue = resources.getStringArray(R.array.kind)
+        val arrayAdapter = ArrayAdapter(
+            binding.root.context,
+            R.layout.status_dropdown_item,
+            statusValue
+        )
+        binding.idKind.setAdapter(arrayAdapter)
+
     }
 
-    private fun pushImageToStorage(){
-        if(imageUri != null){
-            val fileRef: StorageReference = reference.child(System.currentTimeMillis().toString() + "." + getFileExtension(imageUri as Uri))
+
+    private fun pushImageToStorage() {
+        if (binding.idCount.text.toString() != "" && imageUri != null && binding.idAuthor.text.toString() != "" &&
+            binding.idTitle.text.toString() != "" && binding.idDescription.text.toString() != "" && binding.idPrice.text.toString() != "" &&
+            binding.idKind.text.toString() != "Kind"
+        ) {
+            loadDialog = LoadDialog(this)
+            loadDialog.startLoading()
+            val fileRef: StorageReference = reference.child(
+                System.currentTimeMillis().toString() + "." + getFileExtension(imageUri as Uri)
+            )
             fileRef.putFile(imageUri as Uri).addOnSuccessListener {
                 fileRef.downloadUrl.addOnSuccessListener {
-                    binding.idImgeURL.setText(it.toString())
-                    addNewBook()
                     Toast.makeText(this, "Upload success image", Toast.LENGTH_SHORT).show()
+                    addNewBook(it.toString())
+                    loadDialog.dismissDialog()
                 }
-            }.addOnFailureListener{
+            }.addOnFailureListener {
+                loadDialog.dismissDialog()
                 Toast.makeText(this, "Upload failed image", Toast.LENGTH_SHORT).show()
             }
-        }else{
-            Toast.makeText(this, "Please select image", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Please fill all information", Toast.LENGTH_SHORT).show()
         }
     }
-    private fun getFileExtension(uri: Uri): String?{
+
+    private fun getFileExtension(uri: Uri): String? {
         var cr: ContentResolver = contentResolver
         var mime: MimeTypeMap = MimeTypeMap.getSingleton()
         return mime.getExtensionFromMimeType(cr.getType(uri))
     }
+
     private fun openGallery() {
         val galleryIntent: Intent = Intent()
         galleryIntent.action = Intent.ACTION_GET_CONTENT
@@ -95,46 +115,28 @@ class AddItemActivity : AppCompatActivity() {
         }
     }
 
-    private fun addNewBook() {
-        if (binding.idCount.text.toString() != "" && binding.idImgeURL.text.toString() != "" && binding.idAuthor.text.toString() != "" &&
-            binding.idTitle.text.toString() != "" && binding.idDescription.text.toString() != "" && binding.idPrice.text.toString() != "" &&
-            binding.idKind.text.toString() != ""
-        ) {
-            newBook = mutableMapOf(
-                "Image" to binding.idImgeURL.text.toString(),
-                "Name" to binding.idTitle.text.toString(),
-                "Author" to binding.idAuthor.text.toString(),
-                "Price" to binding.idPrice.text.toString().toDouble().roundToInt(),
-                "rate" to "0".toDouble().roundToInt(),
-                "Kind" to binding.idKind.text.toString(),
-                "Counts" to binding.idCount.text.toString().toDouble().roundToInt(),
-                "Description" to binding.idDescription.text.toString()
-            )
-
-            viewModel.addtoDb(newBook)
-            binding.idCount.setText("", TextView.BufferType.EDITABLE)
-            binding.idImgeURL.setText("", TextView.BufferType.EDITABLE)
-            binding.idAuthor.setText("", TextView.BufferType.EDITABLE)
-            binding.idTitle.setText("", TextView.BufferType.EDITABLE)
-            binding.idDescription.setText("", TextView.BufferType.EDITABLE)
-            binding.idPrice.setText("", TextView.BufferType.EDITABLE)
-            binding.idKind.setText("", TextView.BufferType.EDITABLE)
-        }
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun addNewBook(imgUrl: String) {
+        newBook = mutableMapOf(
+            "Image" to imgUrl,
+            "Name" to binding.idTitle.text.toString(),
+            "Author" to binding.idAuthor.text.toString(),
+            "Price" to binding.idPrice.text.toString().toDouble().roundToInt(),
+            "rate" to "0".toDouble().roundToInt(),
+            "Kind" to binding.idKind.text.toString(),
+            "Counts" to binding.idCount.text.toString().toDouble().roundToInt(),
+            "Description" to binding.idDescription.text.toString()
+        )
+        viewModel.addtoDb(newBook)
+        binding.idCount.setText("", TextView.BufferType.EDITABLE)
+        binding.idAuthor.setText("", TextView.BufferType.EDITABLE)
+        binding.idTitle.setText("", TextView.BufferType.EDITABLE)
+        binding.idDescription.setText("", TextView.BufferType.EDITABLE)
+        binding.idPrice.setText("", TextView.BufferType.EDITABLE)
+        binding.idKind.setText("", TextView.BufferType.EDITABLE)
+        binding.idThumbnail.setImageDrawable(resources.getDrawable(R.drawable.add_new_book))
+        binding.idTnBackground.setBackgroundDrawable(resources.getDrawable(R.drawable.add_new_book))
         Toast.makeText(this, "Add success", Toast.LENGTH_SHORT).show()
     }
 
-    private fun loadImageFromUri(uri: Uri) {
-        Glide
-            .with(baseContext)
-            .load(uri)
-            .centerCrop()
-            .placeholder(R.drawable.ic_launcher_background)
-            .into(binding.idTnBackground)
-        Glide
-            .with(baseContext)
-            .load(uri)
-            .centerCrop()
-            .placeholder(R.drawable.ic_launcher_background)
-            .into(binding.idThumbnail)
-    }
 }

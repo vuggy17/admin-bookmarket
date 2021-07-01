@@ -74,9 +74,9 @@ class OrderDetail : AppCompatActivity() {
                 setStatusOnTextChange(text.toString())
             }
             val formatter = DecimalFormat("#,###")
-            userName.text = currentOrder.currentUser.fullName
+
             userEmail.text = currentOrder.currentUser.email
-            userPhoneNumber.text = currentOrder.currentUser.phoneNumber
+
             dateTime.text = currentOrder.dateTime
             orderName.text = currentOrder.userDeliverAddress.fullName
             orderPhoneNumber.text = currentOrder.userDeliverAddress.phoneNumber

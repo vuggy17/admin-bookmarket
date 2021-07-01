@@ -46,8 +46,7 @@ class ItemDetailActivity : AppCompatActivity() {
                 .setCancelable(false)
                 .setPositiveButton("Yes") { dialog, id ->
                     // Delete selected note from database
-                    Log.d("22222", displayItem.toString())
-                   //deleteCurrentBook()
+                   deleteCurrentBook()
                 }
                 .setNegativeButton("No") { dialog, id ->
                     dialog.dismiss()

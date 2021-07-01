@@ -13,7 +13,7 @@ data class Book(
     var rate: Int = 10,
     var Kind: String? ="1",
     var Counts:Int = 1,
-    var imageId: String? ="",
+    var imageId: String? ="1",
     var Description: String? = "1" ):Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),

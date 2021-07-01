@@ -110,11 +110,12 @@ class OrderAdapter(
                 onExpandBillClick(listItemOrder, expandBill)
             }
             confirm.setOnClickListener {
-                viewModel.updateUserStatus(currentOrder.currentUser.email,currentOrder.id,"CONFIRMED")
-                currentOrder.status = "CONFIRMED"
-                status.text = currentOrder.status
-                confirm.isEnabled = false
-                confirm.setBackgroundColor(context.resources.getColor(R.color.disable))
+                if(viewModel.updateUserStatus(currentOrder.currentUser.email,currentOrder.id,"CONFIRMED")){
+                    currentOrder.status = "CONFIRMED"
+                    status.text = currentOrder.status
+                    confirm.isEnabled = false
+                    confirm.setBackgroundColor(context.resources.getColor(R.color.disable))
+                }
             }
         }
     }

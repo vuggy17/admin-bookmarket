@@ -14,6 +14,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.admin_bookmarket.ViewModel.AddItemViewModel
+import com.example.admin_bookmarket.data.common.AppUtils
 import com.example.admin_bookmarket.databinding.ActivityAddItemBinding
 import com.example.admin_bookmarket.ui.login.LoadDialog
 import com.google.firebase.storage.FirebaseStorage
@@ -100,7 +101,8 @@ class AddItemActivity : AppCompatActivity() {
                 }
             }.addOnFailureListener {
                 loadDialog.dismissDialog()
-                Toast.makeText(this, "Upload failed image", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Upload image failed $it", Toast.LENGTH_SHORT).show()
+
             }
         } else {
             Toast.makeText(this, "Please fill all information", Toast.LENGTH_SHORT).show()

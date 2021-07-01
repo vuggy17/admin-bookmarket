@@ -1,15 +1,19 @@
 package com.example.admin_bookmarket.ViewModel
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.admin_bookmarket.data.OrderRepository
+import com.example.admin_bookmarket.data.common.AppUtils
 import com.example.admin_bookmarket.data.common.Constants
 import com.example.admin_bookmarket.data.model.Cart
 import com.example.admin_bookmarket.data.model.MyUser
 import com.example.admin_bookmarket.data.model.Order
 import com.google.firebase.Timestamp
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -17,7 +21,10 @@ import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
 @HiltViewModel
-class OrderViewModel @Inject constructor(private val orderRepository: OrderRepository) :
+class OrderViewModel @Inject constructor(
+    private val orderRepository: OrderRepository,
+    @ApplicationContext    private val appContext: Context
+) :
     ViewModel() {
 
     private var _orders = MutableLiveData<MutableList<Order>>()
@@ -31,6 +38,9 @@ class OrderViewModel @Inject constructor(private val orderRepository: OrderRepos
             .addSnapshotListener { value, error ->
                 if (error != null) {
                     Log.w(Constants.VMTAG, "Listen failed.", error)
+                    if(!AppUtils.checkInternet(context = appContext)){
+                        Toast.makeText(appContext,"Please checking your internet connection!", Toast.LENGTH_SHORT).show()
+                    }
                 } else {
                     var billingList: ArrayList<Cart> = ArrayList()
                     for (doc in value!!) {
@@ -57,6 +67,9 @@ class OrderViewModel @Inject constructor(private val orderRepository: OrderRepos
         orderRepository.getAllUserFromDB().addSnapshotListener { value, error ->
             if (error != null) {
                 Log.w(Constants.VMTAG, "Listen failed.", error)
+                if(!AppUtils.checkInternet(context = appContext)){
+                    Toast.makeText(appContext,"Please checking your internet connection!", Toast.LENGTH_SHORT).show()
+                }
             } else {
 
                 for (doc in value!!) {
@@ -72,6 +85,9 @@ class OrderViewModel @Inject constructor(private val orderRepository: OrderRepos
         orderRepository.getAllOrderFromDB(userId).addSnapshotListener { value, error ->
             if (error != null) {
                 Log.w(Constants.VMTAG, "Listen failed.", error)
+                if(!AppUtils.checkInternet(context = appContext)){
+                    Toast.makeText(appContext,"Please checking your internet connection!", Toast.LENGTH_SHORT).show()
+                }
             } else {
                 for (doc in value!!) {
                     val order = Order()
@@ -100,7 +116,7 @@ class OrderViewModel @Inject constructor(private val orderRepository: OrderRepos
                     setBillingItem(userId, orderID = order.id)
                     if (isExitsInAllOrder(order) == null) {
                         allOrderValue.add(order)
-                    }else{
+                    } else {
                         allOrderValue[allOrderValue.indexOf(isExitsInAllOrder(order))] = order
                     }
                     orders.value = allOrderValue
@@ -108,24 +124,30 @@ class OrderViewModel @Inject constructor(private val orderRepository: OrderRepos
             }
         }
     }
-        private fun isExitsInAllOrder(newOrder: Order): Order? {
-            for (order in allOrderValue) {
-                if (order.id == newOrder.id) {
-                    return order
-                }
-            }
-            return null
-        }
 
-        private fun getFormatDate(date: Date): String {
-            val sdf = SimpleDateFormat("HH:mm:ss dd-MM-yyyy ")
-            return sdf.format(date)
-        }
-
-        fun updateUserStatus(userId: String, docId: String, status: String): Boolean {
-            if(orderRepository.updateOrderStatus(userId, docId, status)){
-                return true
+    private fun isExitsInAllOrder(newOrder: Order): Order? {
+        for (order in allOrderValue) {
+            if (order.id == newOrder.id) {
+                return order
             }
-            return false
         }
+        return null
     }
+
+    private fun getFormatDate(date: Date): String {
+        val sdf = SimpleDateFormat("HH:mm:ss dd-MM-yyyy ")
+        return sdf.format(date)
+    }
+
+    fun updateUserStatus(userId: String, docId: String, status: String): Boolean {
+        return if (orderRepository.updateOrderStatus(userId, docId, status)) {
+            true
+        }else{
+            if(!AppUtils.checkInternet(context = appContext)){
+                Toast.makeText(appContext,"Please checking your internet connection!", Toast.LENGTH_SHORT).show()
+            }
+            false
+        }
+
+    }
+}

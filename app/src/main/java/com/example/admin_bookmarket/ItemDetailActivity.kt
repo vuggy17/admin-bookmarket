@@ -210,6 +210,8 @@ class ItemDetailActivity : AppCompatActivity() {
                 } else {
                     viewModel.updateToDb(displayItem.id!!, newBook)
                 }
+            }else{
+                Toast.makeText(this, "Nothing to update", Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -30,7 +30,7 @@
                 android:title="Complete orders" />
             <item
                 android:id="@+id/cancel"
-                android:icon="@drawable/ic_baseline_cancel_24"
+                android:icon="@drawable/ic_baseline_cancel_order"
                 app:showAsAction="always"
                 android:title="Cancel orders" />
         </menu>

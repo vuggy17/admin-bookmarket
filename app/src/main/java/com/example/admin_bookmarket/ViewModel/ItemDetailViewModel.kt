@@ -65,6 +65,7 @@ class ItemDetailViewModel @Inject constructor(
     }
 
     fun updateToDb(id: String, newBook: Book) {
+
         FirebaseFirestore.getInstance().collection("books").document(id)
             .update("Image", newBook.Image)
         FirebaseFirestore.getInstance().collection("books").document(id)
@@ -81,6 +82,9 @@ class ItemDetailViewModel @Inject constructor(
             .update("Counts", newBook.Counts)
         FirebaseFirestore.getInstance().collection("books").document(id)
             .update("Description", newBook.Description)
+        FirebaseFirestore.getInstance().collection("books").document(id)
+            .update("ImageID", newBook.imageId)
+        Toast.makeText(appContext, "Update book success", Toast.LENGTH_SHORT).show()
 
     }
 

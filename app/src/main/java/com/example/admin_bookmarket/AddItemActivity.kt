@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.webkit.MimeTypeMap
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -59,11 +60,31 @@ class AddItemActivity : AppCompatActivity() {
 
     }
 
+    private fun checkValidEditText(editText: EditText): Boolean {
+        return if (editText.text.isBlank()) {
+            editText.error = "This filed can not be blank"
+            false
+        } else {
+            true
+        }
+    }
+
+    private fun checkValidKind(): Boolean {
+        return if (binding.idKind.text.toString() != "Kind") {
+            true
+        } else {
+            binding.idKind.error = "Select kind of new book"
+            false
+        }
+    }
+
 
     private fun pushImageToStorage() {
-        if (binding.idCount.text.toString() != "" && imageUri != null && binding.idAuthor.text.toString() != "" &&
-            binding.idTitle.text.toString() != "" && binding.idDescription.text.toString() != "" && binding.idPrice.text.toString() != "" &&
-            binding.idKind.text.toString() != "Kind"
+        if (checkValidEditText(binding.idCount) && checkValidEditText(binding.idTitle) &&
+            checkValidEditText(binding.idAuthor) && checkValidKind() && checkValidEditText(binding.idPrice) && checkValidEditText(
+                binding.idDescription
+            ) && imageUri != null
+
         ) {
             loadDialog = LoadDialog(this)
             loadDialog.startLoading()

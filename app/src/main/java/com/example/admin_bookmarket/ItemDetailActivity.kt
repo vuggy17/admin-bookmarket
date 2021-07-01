@@ -4,6 +4,7 @@ package com.example.admin_bookmarket
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -45,7 +46,8 @@ class ItemDetailActivity : AppCompatActivity() {
                 .setCancelable(false)
                 .setPositiveButton("Yes") { dialog, id ->
                     // Delete selected note from database
-                   deleteCurrentBook()
+                    Log.d("22222", displayItem.toString())
+                   //deleteCurrentBook()
                 }
                 .setNegativeButton("No") { dialog, id ->
                     dialog.dismiss()
@@ -57,7 +59,7 @@ class ItemDetailActivity : AppCompatActivity() {
 
     private fun deleteCurrentBook()
     {
-        viewModel.deleteBook(displayItem.id!!)
+        viewModel.deleteBook(displayItem)
         startActivity(Intent(baseContext, MainActivity::class.java))
     }
 

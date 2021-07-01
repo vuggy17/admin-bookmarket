@@ -11,7 +11,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.doOnTextChanged
 import com.bumptech.glide.Glide
 import com.example.admin_bookmarket.ViewModel.AddItemViewModel
 import com.example.admin_bookmarket.databinding.ActivityAddItemBinding
@@ -19,7 +18,6 @@ import com.example.admin_bookmarket.ui.login.LoadDialog
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.DecimalFormat
 import kotlin.math.roundToInt
 
 @AndroidEntryPoint
@@ -69,13 +67,14 @@ class AddItemActivity : AppCompatActivity() {
         ) {
             loadDialog = LoadDialog(this)
             loadDialog.startLoading()
-            val fileRef: StorageReference = reference.child(
+            val imgId =
                 System.currentTimeMillis().toString() + "." + getFileExtension(imageUri as Uri)
-            )
+            val fileRef: StorageReference = reference.child(imgId)
+
             fileRef.putFile(imageUri as Uri).addOnSuccessListener {
                 fileRef.downloadUrl.addOnSuccessListener {
                     Toast.makeText(this, "Upload success image", Toast.LENGTH_SHORT).show()
-                    addNewBook(it.toString())
+                    addNewBook(it.toString(), imgId)
                     loadDialog.dismissDialog()
                 }
             }.addOnFailureListener {
@@ -116,7 +115,7 @@ class AddItemActivity : AppCompatActivity() {
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    private fun addNewBook(imgUrl: String) {
+    private fun addNewBook(imgUrl: String, imgId: String) {
         newBook = mutableMapOf(
             "Image" to imgUrl,
             "Name" to binding.idTitle.text.toString(),
@@ -125,7 +124,8 @@ class AddItemActivity : AppCompatActivity() {
             "rate" to "0".toDouble().roundToInt(),
             "Kind" to binding.idKind.text.toString(),
             "Counts" to binding.idCount.text.toString().toDouble().roundToInt(),
-            "Description" to binding.idDescription.text.toString()
+            "Description" to binding.idDescription.text.toString(),
+            "ImageID" to imgId
         )
         viewModel.addtoDb(newBook)
         binding.idCount.setText("", TextView.BufferType.EDITABLE)

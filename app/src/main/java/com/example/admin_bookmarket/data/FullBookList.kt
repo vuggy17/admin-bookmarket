@@ -34,6 +34,7 @@ public class FullBookList private constructor(var lstFullBook: MutableList<Book>
                         doc.data["rate"].toString().toDouble().roundToInt(),
                         doc.data["Kind"].toString(),
                         doc.data["Counts"].toString().toDouble().roundToInt(),
+                        doc.data["ImageId"].toString(),
                         doc.data["Description"].toString())
                     bookList.add(bookItem)
                 }

@@ -9,6 +9,8 @@ import com.example.admin_bookmarket.data.common.Constants
 import com.example.admin_bookmarket.data.common.Constants.ITEM
 import com.example.admin_bookmarket.data.model.Book
 import com.google.firebase.firestore.*
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.ArrayList
 import javax.inject.Inject
@@ -63,9 +65,12 @@ class ItemDetailViewModel @Inject constructor( private val savedStateHandle: Sav
         FirebaseFirestore.getInstance().collection("books").document(id).update("Description", newBook.Description)
 
     }
-
-    fun deleteBook(id: String)
+    private val reference: StorageReference = FirebaseStorage.getInstance().reference
+    fun deleteBook(book: Book)
     {
-        FirebaseFirestore.getInstance().collection("books").document(id).delete()
+        FirebaseFirestore.getInstance().collection("books").document(book.id!!).delete()
+        val desertRef = reference.child("images/desert.jpg")
+
+
     }
 }

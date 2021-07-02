@@ -1,41 +1,41 @@
 {
   "project_info": {
-    "project_number": "231151199912",
-    "project_id": "nmuddd-book-store",
-    "storage_bucket": "nmuddd-book-store.appspot.com"
+    "project_number": "101443503174",
+    "project_id": "lttbdd-onlinebookmarket",
+    "storage_bucket": "lttbdd-onlinebookmarket.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:231151199912:android:f18fb58b161879f3fac49d",
+        "mobilesdk_app_id": "1:101443503174:android:4330875a95caf84ab07647",
         "android_client_info": {
           "package_name": "com.example.admin_bookmarket"
         }
       },
       "oauth_client": [
         {
-          "client_id": "231151199912-jq29pis55266popt1pv6g1rmlhar5532.apps.googleusercontent.com",
+          "client_id": "101443503174-1teq6e3s9r27prp4m8a0jkm4gdqcm78g.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.admin_bookmarket",
-            "certificate_hash": "7f6761506398443ec1038de3ca0aac18773d91b4"
+            "certificate_hash": "8cd50f3b3747e9aec554d8366c7e3854829da672"
           }
         },
         {
-          "client_id": "231151199912-rsm4ce7910fqjmq8rd97sm8ct5ctj9dm.apps.googleusercontent.com",
+          "client_id": "101443503174-t03oe9khvci0s6ub9lv04p15bmap1isn.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAvEY1NG3uFKHxUFfx7OPe-2LFm-B1glQs"
+          "current_key": "AIzaSyDPWyR5t9tnzR39qpM3UsrAmbQ9o2rP8cc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "231151199912-rsm4ce7910fqjmq8rd97sm8ct5ctj9dm.apps.googleusercontent.com",
+              "client_id": "101443503174-t03oe9khvci0s6ub9lv04p15bmap1isn.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -44,27 +44,35 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:231151199912:android:e8a5af17184cecf5fac49d",
+        "mobilesdk_app_id": "1:101443503174:android:e18826f829c9ec1cb07647",
         "android_client_info": {
           "package_name": "com.example.svbookmarket"
         }
       },
       "oauth_client": [
         {
-          "client_id": "231151199912-rsm4ce7910fqjmq8rd97sm8ct5ctj9dm.apps.googleusercontent.com",
+          "client_id": "101443503174-0nqohs5p8cjvru2so9qph0sirea4i71q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.svbookmarket",
+            "certificate_hash": "7f6761506398443ec1038de3ca0aac18773d91b4"
+          }
+        },
+        {
+          "client_id": "101443503174-t03oe9khvci0s6ub9lv04p15bmap1isn.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAvEY1NG3uFKHxUFfx7OPe-2LFm-B1glQs"
+          "current_key": "AIzaSyDPWyR5t9tnzR39qpM3UsrAmbQ9o2rP8cc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "231151199912-rsm4ce7910fqjmq8rd97sm8ct5ctj9dm.apps.googleusercontent.com",
+              "client_id": "101443503174-t03oe9khvci0s6ub9lv04p15bmap1isn.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

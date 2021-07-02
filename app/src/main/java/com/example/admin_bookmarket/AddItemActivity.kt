@@ -38,7 +38,7 @@ class AddItemActivity : AppCompatActivity() {
         binding = ActivityAddItemBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setContentView(binding.root)
+        binding.idTnBackground.setImageDrawable(resources.getDrawable(R.drawable.add_new_book))
 
         binding.idAddBook.setOnClickListener {
             pushImageToStorage()
@@ -158,7 +158,8 @@ class AddItemActivity : AppCompatActivity() {
         binding.idPrice.setText("", TextView.BufferType.EDITABLE)
         binding.idKind.setText("", TextView.BufferType.EDITABLE)
         binding.idThumbnail.setImageDrawable(resources.getDrawable(R.drawable.add_new_book))
-        binding.idTnBackground.setBackgroundDrawable(resources.getDrawable(R.drawable.add_new_book))
+        binding.idTnBackground.setImageDrawable(resources.getDrawable(R.drawable.add_new_book))
+       // binding.idTnBackground.setBackgroundDrawable(resources.getDrawable(R.drawable.add_new_book))
         Toast.makeText(this, "Add success", Toast.LENGTH_SHORT).show()
     }
 

@@ -9,8 +9,11 @@ import android.widget.DatePicker
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.example.admin_bookmarket.ViewModel.UserViewModel
+import com.example.admin_bookmarket.data.common.AppUtil
 import com.example.admin_bookmarket.data.model.User
 import com.example.admin_bookmarket.databinding.ActivityEditProfileBinding
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import java.util.regex.Pattern
@@ -54,6 +57,10 @@ class EditProfileActivity : AppCompatActivity() {
                     district = binding.edtDistrict.text.toString()
                 )
                 viewModel.updateUserInfo(user)
+                val updates = mutableMapOf<String, Any>(
+                    "isNew" to FieldValue.delete()
+                )
+                FirebaseFirestore.getInstance().collection("salerAccount").document(AppUtil.currentAccount.email).update(updates)
                 Toast.makeText(this,"Saved", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(baseContext, ProfileActivity::class.java))
                 finish()
@@ -117,8 +124,6 @@ class EditProfileActivity : AppCompatActivity() {
         binding.edtCity.setText(viewModel.getUserInfo().city)
         binding.edtPhoneNumber.setText(viewModel.getUserInfo().phoneNumber)
         binding.gender.setText(viewModel.getUserInfo().gender, false)
-
-
 
     }
     private fun pickDateSetting(){

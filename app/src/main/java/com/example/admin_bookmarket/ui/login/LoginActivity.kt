@@ -31,6 +31,7 @@ import com.example.admin_bookmarket.data.model.User
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
@@ -119,9 +120,22 @@ class LoginActivity : AppCompatActivity() {
                             if (task.isSuccessful) {
                                 FullBookList.getInstance()
                                 AppUtil.currentAccount.email = email
-                                loadDialog.dismissDialog()
-                                startActivity(Intent(baseContext, MainActivity::class.java))
-                                finish()
+                                FirebaseFirestore.getInstance().collection("salerAccount").document(email).get().addOnSuccessListener {
+                                    Log.d("00000000000000000", it.data?.get("isNew").toString())
+                                    if (it.data?.get("isNew").toString() == "true")
+                                    {
+                                        Log.d("00000000000000000", "done 1")
+                                        loadDialog.dismissDialog()
+                                        startActivity(Intent(baseContext, EditProfileActivity::class.java))
+                                        finish()
+                                    }
+                                    else {
+                                        Log.d("00000000000000000", "done 2")
+                                        loadDialog.dismissDialog()
+                                        startActivity(Intent(baseContext, MainActivity::class.java))
+                                        finish()
+                                    }
+                                }
                             } else {
                                 loginPasswordLayout.error = task.exception!!.message.toString()
                                 loginPassword.clearFocus()

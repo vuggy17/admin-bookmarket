@@ -116,6 +116,8 @@ class RegisterActivity : AppCompatActivity() {
         user = User(fullName = edtName.text.toString())
         appAccount = AppAccount(email, "", user)
         dbSalerReference.document(appAccount.email).set(appAccount)
+        val isNewMap: MutableMap<String, Any> = mutableMapOf("isNew" to "true")
+        dbSalerReference.document(appAccount.email).set(isNewMap)
         dbReference.document(appAccount.email).set(appAccount).addOnSuccessListener {
             Toast.makeText(this, "Register Success", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener { e ->

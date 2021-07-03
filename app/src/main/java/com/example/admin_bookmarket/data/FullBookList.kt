@@ -58,7 +58,10 @@ public class FullBookList private constructor(var lstFullBook: MutableList<Book>
         fun getInstance(): FullBookList {
             return Holder.INSTANCE
         }
-
+        fun destroyOld()
+        {
+            Holder.INSTANCE.getDataBySnapshot()
+        }
 //        private fun getDataFromDb(): MutableList<Book> {
 //            val lstFullBook: MutableList<Book> = mutableListOf()
 //            val db: FirebaseFirestore = FirebaseFirestore.getInstance()

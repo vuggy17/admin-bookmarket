@@ -14,6 +14,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.admin_bookmarket.ViewModel.AddItemViewModel
+import com.example.admin_bookmarket.data.common.AppUtil
 import com.example.admin_bookmarket.data.common.AppUtils
 import com.example.admin_bookmarket.databinding.ActivityAddItemBinding
 import com.example.admin_bookmarket.ui.login.LoadDialog
@@ -148,7 +149,9 @@ class AddItemActivity : AppCompatActivity() {
             "Kind" to binding.idKind.text.toString(),
             "Counts" to binding.idCount.text.toString().toDouble().roundToInt(),
             "Description" to binding.idDescription.text.toString(),
-            "ImageID" to imgId
+            "ImageID" to imgId,
+            "Saler" to AppUtil.currentAccount.email,
+            "SalerName" to AppUtil.currentAccount.email
         )
         viewModel.addtoDb(newBook)
         binding.idCount.setText("", TextView.BufferType.EDITABLE)

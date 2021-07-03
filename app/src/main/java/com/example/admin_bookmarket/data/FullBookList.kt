@@ -1,6 +1,7 @@
 package com.example.admin_bookmarket.data
 
 import android.util.Log
+import com.example.admin_bookmarket.data.common.AppUtil
 import com.example.admin_bookmarket.data.common.Constants
 import com.example.admin_bookmarket.data.model.Book
 import com.google.firebase.firestore.FirebaseFirestore
@@ -26,17 +27,23 @@ public class FullBookList private constructor(var lstFullBook: MutableList<Book>
                 }
                 val bookList: MutableList<Book> = ArrayList()
                 for (doc in value!!) {
-                    var bookItem =  Book(doc.id,
-                        doc.data["Image"].toString(),
-                        doc.data["Name"].toString(),
-                        doc.data["Author"].toString(),
-                        doc.data["Price"].toString().toDouble().roundToInt(),
-                        doc.data["rate"].toString().toDouble().roundToInt(),
-                        doc.data["Kind"].toString(),
-                        doc.data["Counts"].toString().toDouble().roundToInt(),
-                        doc.data["ImageID"].toString(),
-                        doc.data["Description"].toString())
-                    bookList.add(bookItem)
+                    if (doc.data["Saler"].toString() == AppUtil.currentAccount.email ) {
+                        var bookItem = Book(
+                            doc.id,
+                            doc.data["Image"].toString(),
+                            doc.data["Name"].toString(),
+                            doc.data["Author"].toString(),
+                            doc.data["Price"].toString().toDouble().roundToInt(),
+                            doc.data["rate"].toString().toDouble().roundToInt(),
+                            doc.data["Kind"].toString(),
+                            doc.data["Counts"].toString().toDouble().roundToInt(),
+                            doc.data["ImageID"].toString(),
+                            doc.data["Description"].toString(),
+                            doc.data["Saler"].toString(),
+                            doc.data["SalerName"].toString()
+                        )
+                        bookList.add(bookItem)
+                    }
                 }
                 lstFullBook = bookList
             }

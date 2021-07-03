@@ -5,10 +5,12 @@ import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.os.Looper
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
@@ -16,17 +18,27 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageView
+import com.example.admin_bookmarket.EditProfileActivity
 import com.example.admin_bookmarket.MainActivity
 import com.example.admin_bookmarket.databinding.ActivityLoginBinding
 
 import com.example.admin_bookmarket.R
+import com.example.admin_bookmarket.RegisterActivity
 import com.example.admin_bookmarket.data.FullBookList
+import com.example.admin_bookmarket.data.common.AppUtil
+import com.example.admin_bookmarket.data.model.AppAccount
+import com.example.admin_bookmarket.data.model.User
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import java.util.regex.Pattern
 
@@ -45,7 +57,8 @@ class LoginActivity : AppCompatActivity() {
 
     //init database reference
     private val db = Firebase.firestore
-    private val dbAccountsReference = db.collection("accounts")
+    private val dbSalerAccountsReference = db.collection("salerAccount")
+    private  val dbAccountsReference = db.collection("accounts")
     private lateinit var auth: FirebaseAuth
     private lateinit var loadDialog: LoadDialog
 
@@ -59,6 +72,7 @@ class LoginActivity : AppCompatActivity() {
         loginPasswordLayout = findViewById(R.id.LoginPasswordLayout)
         loginPassword = findViewById(R.id.LoginPassword)
         loginButton = findViewById(R.id.loginButton)
+        loginSignUp = findViewById(R.id.LoginSignUp)
         val resetPassword: TextView = findViewById(R.id.resetPass)
         resetPassword.setOnClickListener {
             startActivity(Intent(baseContext, ForgotPassword::class.java))
@@ -69,9 +83,12 @@ class LoginActivity : AppCompatActivity() {
             }
         }
         loginButton.setOnClickListener {
-            onButtonLoginClick()
+                onButtonLoginClick()
         }
-
+        loginSignUp.setOnClickListener {
+            startActivity(Intent(baseContext, RegisterActivity::class.java))
+            finish() //remove activity from backstack
+        }
     }
 
     override fun onStart() {
@@ -87,10 +104,10 @@ class LoginActivity : AppCompatActivity() {
         if (isValidEmail() && isValidPassword()) {
             loadDialog= LoadDialog(this)
             loadDialog.startLoading()
-            dbAccountsReference.get().addOnSuccessListener { result ->
+            dbSalerAccountsReference.get().addOnSuccessListener { result ->
                 var emailExist: Boolean = false
                 for (document in result) {
-                    if (document.id == loginEmail.text.toString() && document.data["isAdmin"] != null) {
+                    if (document.id == loginEmail.text.toString()) {
                         emailExist = true
                     }
                 }
@@ -101,6 +118,7 @@ class LoginActivity : AppCompatActivity() {
                         .addOnCompleteListener(this) { task ->
                             if (task.isSuccessful) {
                                 FullBookList.getInstance()
+                                AppUtil.currentAccount.email = email
                                 loadDialog.dismissDialog()
                                 startActivity(Intent(baseContext, MainActivity::class.java))
                                 finish()
@@ -112,11 +130,52 @@ class LoginActivity : AppCompatActivity() {
                         }
 
                 } else {
-                    loginEmailLayout.error = "Email is not exist or been wrong!"
-                    loadDialog.dismissDialog()
+                     dbAccountsReference.get().addOnSuccessListener {
+                         var isBuyer: Boolean = false
+                         var name: String = ""
+                         for (document in it) {
+                             if (document.id == loginEmail.text.toString()) {
+                                 isBuyer = true
+                                 val mapOfUser: MutableMap<String, Any> = document.data["user"] as MutableMap<String, Any>
+                                 name = mapOfUser.get("fullName").toString()
+                             }
+                         }
+                         if (isBuyer) {
+                             val email = loginEmail.text.toString()
+                             val password = loginPassword.text.toString()
+                             val user = User(name)
+                             val appAccount = AppAccount(email, "", user)
+                             FirebaseFirestore.getInstance().collection("salerAccount")
+                                 .document(email).set(appAccount)
+                             auth.signInWithEmailAndPassword(email, password)
+                                 .addOnCompleteListener(this) { task ->
+                                     if (task.isSuccessful) {
+                                         FullBookList.getInstance()
+                                         AppUtil.currentAccount.email = email
+                                         loadDialog.dismissDialog()
+                                         startActivity(
+                                             Intent(
+                                                 baseContext,
+                                                 EditProfileActivity::class.java
+                                             )
+                                         )
+                                         finish()
+                                     } else {
+                                         loginPasswordLayout.error =
+                                             task.exception!!.message.toString()
+                                         loginPassword.clearFocus()
+                                         loadDialog.dismissDialog()
+                                     }
+                                 }
+                         } else {
+                             Toast.makeText(this, "Wrong email or password!", Toast.LENGTH_SHORT)
+                                 .show()
+                             loadDialog.dismissDialog()
+                         }
+                     }
+                }
                 }
             }
-        }
     }
 
 

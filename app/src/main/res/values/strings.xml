@@ -36,7 +36,7 @@
     <string name="register">Register</string>
     <string name="login">Admin login</string>
     <string name="email">Email</string>
-    <string name="don_t_have_account">Don\'t have account?</string>
+    <string name="don_t_have_account">Don\'t have seller or buyer account?</string>
     <string name="sign_up">Sign up</string>
     <string name="sign_in">Sign in</string>
     <string name="cover">cover</string>
@@ -90,4 +90,5 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="all_function">All function</string>
+    <string name="already_have_an_account">Already have an seller or buyer account ?</string>
 </resources>

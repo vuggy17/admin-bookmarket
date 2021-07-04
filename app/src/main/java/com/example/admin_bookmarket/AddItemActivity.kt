@@ -151,7 +151,7 @@ class AddItemActivity : AppCompatActivity() {
             "Description" to binding.idDescription.text.toString(),
             "ImageID" to imgId,
             "Saler" to AppUtil.currentAccount.email,
-            "SalerName" to AppUtil.currentAccount.email
+            "SalerName" to AppUtil.currentAccount.user.fullName
         )
         viewModel.addtoDb(newBook)
         binding.idCount.setText("", TextView.BufferType.EDITABLE)

@@ -1,6 +1,6 @@
-# OnlineBookMarketForSeller
 # OnlineBookMarket - CHỢ SÁCH CHO MỌI NGƯỜI
-Đây là ứng dụng giúp mọi người có thể tự do mua bán sách, đi kèm là ứng dụng dành cho người bán với các chức năng như thêm sách để bán, cập nhật sách theo dõi đơn hàng và thống kê đơn hàng của mình.
+# Ứng dụng dành cho người bán - OnlineBookMarketForSeller
+Đây là ứng dụng đi kèm ứng dụng chính OnlineBookMarket dành cho người bán với các chức năng như thêm sách để bán, cập nhật sách theo dõi đơn hàng và thống kê đơn hàng của mình.
 
 ## Nội Dung
 

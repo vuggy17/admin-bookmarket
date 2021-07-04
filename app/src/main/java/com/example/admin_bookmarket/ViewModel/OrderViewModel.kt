@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.admin_bookmarket.data.OrderRepository
+import com.example.admin_bookmarket.data.common.AppUtil
 import com.example.admin_bookmarket.data.common.AppUtils
 import com.example.admin_bookmarket.data.common.Constants
 import com.example.admin_bookmarket.data.model.Cart
@@ -66,7 +67,19 @@ class OrderViewModel @Inject constructor(
     }
 
     fun getAllOrder(): MutableLiveData<MutableList<Order>> {
-        getAllOrderOfId(Firebase.auth.currentUser!!.email!!)
+        orderRepository.getAllUserFromDB().addSnapshotListener { value, error ->
+            if (error != null) {
+                Log.w(Constants.VMTAG, "Listen failed.", error)
+                if(!AppUtils.checkInternet(context = appContext)){
+                    Toast.makeText(appContext,"Please checking your internet connection!", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                for (doc in value!!) {
+                    getAllOrderOfId(doc.id)
+                }
+
+            }
+        }
         return orders
     }
 
@@ -79,36 +92,38 @@ class OrderViewModel @Inject constructor(
                 }
             } else {
                 for (doc in value!!) {
-                    val order = Order()
-                    order.id = doc.id
-                    val timeStamp = doc["dateTime"] as Timestamp
-                    order.dateTime = getFormatDate(timeStamp.toDate())
-                    order.status = doc["status"].toString()
-                    order.totalPrince = doc["totalPrince"].toString()
-                    order.userDeliverAddress.addressLane = doc["addressLane"].toString()
-                    order.userDeliverAddress.fullName = doc["fullName"].toString()
-                    order.userDeliverAddress.phoneNumber = doc["phoneNumber"].toString()
-                    order.userDeliverAddress.city = doc["city"].toString()
-                    order.userDeliverAddress.district = doc["district"].toString()
-                    order.cancelReason = doc["reason"].toString()
-                    val userMap = doc["user"] as HashMap<*, *>
-                    order.currentUser = MyUser(
-                        fullName = userMap["fullName"].toString(),
-                        gender = userMap["gender"].toString(),
-                        birthDay = userMap["birthDay"].toString(),
-                        phoneNumber = userMap["phoneNumber"].toString(),
-                        addressLane = userMap["addressLane"].toString(),
-                        city = userMap["city"].toString(),
-                        district = userMap["district"].toString(),
-                    )
-                    order.currentUser.email = doc["userId"].toString()
-                    setBillingItem(userId, orderID = order.id)
-                    if (isExitsInAllOrder(order) == null) {
-                        allOrderValue.add(order)
-                    } else {
-                        allOrderValue[allOrderValue.indexOf(isExitsInAllOrder(order))] = order
+                    if(AppUtil.currentAccount.email == doc["Saler"].toString()){
+                        val order = Order()
+                        order.id = doc.id
+                        val timeStamp = doc["dateTime"] as Timestamp
+                        order.dateTime = getFormatDate(timeStamp.toDate())
+                        order.status = doc["status"].toString()
+                        order.totalPrince = doc["totalPrince"].toString()
+                        order.userDeliverAddress.addressLane = doc["addressLane"].toString()
+                        order.userDeliverAddress.fullName = doc["fullName"].toString()
+                        order.userDeliverAddress.phoneNumber = doc["phoneNumber"].toString()
+                        order.userDeliverAddress.city = doc["city"].toString()
+                        order.userDeliverAddress.district = doc["district"].toString()
+                        order.cancelReason = doc["reason"].toString()
+                        val userMap = doc["user"] as HashMap<*, *>
+                        order.currentUser = MyUser(
+                            fullName = userMap["fullName"].toString(),
+                            gender = userMap["gender"].toString(),
+                            birthDay = userMap["birthDay"].toString(),
+                            phoneNumber = userMap["phoneNumber"].toString(),
+                            addressLane = userMap["addressLane"].toString(),
+                            city = userMap["city"].toString(),
+                            district = userMap["district"].toString(),
+                        )
+                        order.currentUser.email = doc["userId"].toString()
+                        setBillingItem(userId, orderID = order.id)
+                        if (isExitsInAllOrder(order) == null) {
+                            allOrderValue.add(order)
+                        } else {
+                            allOrderValue[allOrderValue.indexOf(isExitsInAllOrder(order))] = order
+                        }
+                        orders.value = allOrderValue
                     }
-                    orders.value = allOrderValue
                 }
             }
         }

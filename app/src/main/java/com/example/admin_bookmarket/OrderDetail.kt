@@ -33,7 +33,6 @@ class OrderDetail : AppCompatActivity() {
         setUpView()
         binding.backClick.setOnClickListener {
             onBackPressed()
-
         }
     }
 

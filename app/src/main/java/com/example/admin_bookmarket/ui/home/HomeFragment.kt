@@ -51,9 +51,19 @@ class HomeFragment : Fragment(), RecyclerViewClickListener {
         binding.htbHomeToolBar.edtSearchText.setOnClickListener{
             startActivity(Intent(context, SearchActivity::class.java))
         }
+        setUpMessage()
+        binding.addNewBook.setOnClickListener {
+            startActivity(Intent(context, AddItemActivity::class.java))
+        }
         return binding.root
     }
-
+    private fun setUpMessage(){
+        if(lstBook.size == 0){
+            binding.noItemToShow.visibility = View.VISIBLE
+        }else{
+            binding.noItemToShow.visibility = View.GONE
+        }
+    }
 
     private val changeObserver = Observer<MutableList<Book>> { value ->
         value?.let {
@@ -61,6 +71,7 @@ class HomeFragment : Fragment(), RecyclerViewClickListener {
             bookAdapter.onChange(value)
             bookAdapter.notifyDataSetChanged()
         }
+        setUpMessage()
     }
 //    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 //        super.onViewCreated(view, savedInstanceState)

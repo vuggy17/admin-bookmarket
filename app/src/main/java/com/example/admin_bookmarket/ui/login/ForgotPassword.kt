@@ -23,9 +23,9 @@ class ForgotPassword : AppCompatActivity() {
         }
         submit()
     }
-
     override fun onBackPressed() {
         startActivity(Intent(baseContext, LoginActivity::class.java))
+        finish()
     }
 
     private fun submit() {

@@ -47,7 +47,15 @@ class OrdersFragment : Fragment(), RecyclerViewClickListener {
             startActivity(Intent(binding.root.context, StatisticActivity::class.java))
         }
 
+        setUpMessage()
         return binding.root
+    }
+    private fun setUpMessage(){
+        if(showList.size == 0){
+            binding.noItemToShow!!.visibility = View.VISIBLE
+        }else{
+            binding.noItemToShow!!.visibility = View.GONE
+        }
     }
 
     private fun getOrders(orderAdapter: OrderAdapter) {
@@ -59,6 +67,7 @@ class OrdersFragment : Fragment(), RecyclerViewClickListener {
             } else {
                 orderAdapter.addOrder(showList)
             }
+            setUpMessage()
 
         })
     }

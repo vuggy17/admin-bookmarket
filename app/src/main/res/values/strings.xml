@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Admin Bookstore</string>
+    <string name="app_name">Book market for seller</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -34,7 +34,7 @@
     <string name="wellcome_slogan">Wellcome to bookmaket</string>
 
     <string name="register">Register</string>
-    <string name="login">Admin login</string>
+    <string name="login">Seller login</string>
     <string name="email">Email</string>
     <string name="don_t_have_account">Don\'t have seller or buyer account?</string>
     <string name="sign_up">Sign up</string>
@@ -63,7 +63,7 @@
     </string-array>
     <string name="fiction"> Fiction </string>
     <string name="profile">Profile</string>
-    <string name="editprofile">Edit Profile</string>
+    <string name="editprofile">Update Profile</string>
     <string name="Feature">Feature</string>
     <string name="your_location">Your location</string>
     <string name="search_book">Search Books</string>

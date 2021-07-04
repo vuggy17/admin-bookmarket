@@ -40,6 +40,17 @@ class MainActivity : AppCompatActivity() {
         bottonNavActionView.setupWithNavController(navController)
 
     }
+    var isBackPressedOnce = false
+    override fun onBackPressed() {
+        if (isBackPressedOnce) {
+            super.onBackPressed()
+            return
+        }
 
+        this.isBackPressedOnce = true
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
+
+        Handler().postDelayed(Runnable { isBackPressedOnce = false }, 2000)
+    }
 
 }

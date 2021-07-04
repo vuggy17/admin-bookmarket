@@ -12,6 +12,8 @@ import com.example.admin_bookmarket.data.model.Cart
 import com.example.admin_bookmarket.data.model.MyUser
 import com.example.admin_bookmarket.data.model.Order
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.text.SimpleDateFormat
@@ -64,20 +66,7 @@ class OrderViewModel @Inject constructor(
     }
 
     fun getAllOrder(): MutableLiveData<MutableList<Order>> {
-        orderRepository.getAllUserFromDB().addSnapshotListener { value, error ->
-            if (error != null) {
-                Log.w(Constants.VMTAG, "Listen failed.", error)
-                if(!AppUtils.checkInternet(context = appContext)){
-                    Toast.makeText(appContext,"Please checking your internet connection!", Toast.LENGTH_SHORT).show()
-                }
-            } else {
-
-                for (doc in value!!) {
-                    getAllOrderOfId(doc.id)
-                }
-
-            }
-        }
+        getAllOrderOfId(Firebase.auth.currentUser!!.email!!)
         return orders
     }
 

@@ -8,7 +8,7 @@
     android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
     tools:context=".EditProfileActivity">
     <ImageView
-        android:visibility="invisible"
+        android:visibility="visible"
         android:id="@+id/imgBack"
         android:layout_width="44dp"
         android:layout_height="wrap_content"
@@ -221,17 +221,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvAddressLane" />
 
-            <LinearLayout
+            <TableLayout
                 android:id="@+id/llDistrictAndCity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.068"
                 app:layout_constraintStart_toStartOf="parent"
+                android:columnCount="2"
+                android:rowCount="1"
                 app:layout_constraintTop_toBottomOf="@+id/edtAddressLane">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_column="0"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
@@ -247,7 +250,7 @@
 
                     <EditText
                         android:id="@+id/edtCity"
-                        android:layout_width="150dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:autofillHints="City"
                         android:fontFamily="@font/roboto_regular"
@@ -257,6 +260,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_column="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="30dp"
@@ -266,7 +270,6 @@
                         android:id="@+id/tvDistrict"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="32dp"
                         android:fontFamily="@font/roboto_bold"
                         android:inputType="text"
                         android:text="District"
@@ -278,16 +281,14 @@
                         android:id="@+id/edtDistrict"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginHorizontal="25dp"
-                        android:layout_marginStart="32dp"
+
                         android:autofillHints="District"
                         android:fontFamily="@font/roboto_regular"
                         android:inputType="text"
-
                         android:textColor="@color/less_black"
                         android:textSize="16dp" />
                 </LinearLayout>
-            </LinearLayout>
+            </TableLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

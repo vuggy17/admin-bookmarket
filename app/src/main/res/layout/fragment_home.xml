@@ -58,4 +58,31 @@
         android:src="@drawable/icon_addbook"
         android:contentDescription="Add book">
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
+    <LinearLayout
+        android:id="@+id/noItemToShow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/less_black"
+            android:textSize="15sp"
+            android:text="Opps you don't have any book! "
+            android:visibility="visible"/>
+        <TextView
+            android:id="@+id/addNewBook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/blue_light"
+            android:textSize="15sp"
+            android:text="Add now"
+            android:visibility="visible"/>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

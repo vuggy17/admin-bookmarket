@@ -15,7 +15,6 @@ class ProfileActivity : AppCompatActivity() {
     val viewModel: UserViewModel by viewModels()
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

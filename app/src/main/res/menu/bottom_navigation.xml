@@ -3,4 +3,5 @@
 
     <item android:title="Books" android:id="@+id/books" android:icon="@drawable/ic_baseline_menu_book_24"/>
     <item android:title="Orders" android:id="@+id/orders" android:icon="@drawable/ic_baseline_content_order"/>
+    <item android:title="Information" android:id="@+id/information" android:icon="@drawable/ic_baseline_info_24"/>
 </menu>

@@ -13,7 +13,7 @@
         android:scaleType="center"
         android:scaleX="0.7"
         android:scaleY="0.7"
-        android:background="@drawable/splash"
+        android:background="@drawable/logo_white_ver"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -27,13 +27,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:fontFamily="@font/roboto_regular"
-        android:text="Book Shop Admin"
         android:layout_marginHorizontal="24dp"
+        android:fontFamily="@font/roboto_regular"
+        android:text="Welcome"
         android:textColor="@color/white"
-        android:textSize="35dp"
+        android:textSize="30dp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgAppLogo" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.738" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,6 +21,7 @@ class UserRepository @Inject constructor(
 
     fun loadData() {
        user = AppUtil.currentUser
+
     }
     fun updateUserData(user: User){
        AppUtil.currentAccount.user = user

@@ -30,14 +30,14 @@ class EditProfileActivity : AppCompatActivity() {
         setData()
         setBirthDateSelector()
         setSaveButtonCommand()
-//        setBackButton()
+        setBackButton()
     }
 
-//    private fun setBackButton(){
-//        binding.imgBack.setOnClickListener {
-//            onBackPressed()
-//        }
-//    }
+    private fun setBackButton(){
+        binding.imgBack.setOnClickListener {
+            onBackPressed()
+        }
+    }
     private fun setBirthDateSelector(){
         binding.edtBirthday.setOnClickListener {
             pickDateSetting()
@@ -62,7 +62,7 @@ class EditProfileActivity : AppCompatActivity() {
                 )
                 FirebaseFirestore.getInstance().collection("salerAccount").document(AppUtil.currentAccount.email).update(updates)
                 Toast.makeText(this,"Saved", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(baseContext, ProfileActivity::class.java))
+                startActivity(Intent(baseContext, MainActivity::class.java))
                 finish()
             }
         }
@@ -104,10 +104,10 @@ class EditProfileActivity : AppCompatActivity() {
 
         return result
     }
-//    override fun onBackPressed() {
-//        super.onBackPressed()
-//        finish()
-//    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
     private fun genderSetUp(){
         val adapter = ArrayAdapter(
             this,

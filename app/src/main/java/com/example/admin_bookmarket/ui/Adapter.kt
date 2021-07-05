@@ -1,5 +1,6 @@
 package com.example.admin_bookmarket.ui
 
+import android.graphics.Bitmap
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,8 @@ import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
 import com.example.admin_bookmarket.R
 import com.example.admin_bookmarket.RecyclerViewClickListener
 import com.example.admin_bookmarket.data.model.Book
@@ -50,9 +53,12 @@ class Adapter(
         holder.bookPrice.text = item.Price.toString() + " đ"
         Glide
             .with(holder.itemView)
+            .asBitmap()
             .load(item.Image)
             .centerCrop()
-            .placeholder(R.drawable.ic_launcher_background)
+            .placeholder(R.drawable.bg_white_placeholder)
+            .transition(BitmapTransitionOptions.withCrossFade())
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(holder.bookImage);
     }
 

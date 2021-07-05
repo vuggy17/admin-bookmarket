@@ -19,6 +19,8 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <SearchView
+            android:iconifiedByDefault="false"
+            android:queryBackground="@color/trans"
             app:iconifiedByDefault="false"
             app:queryBackground="@null"
             android:id="@+id/tb_searchView"

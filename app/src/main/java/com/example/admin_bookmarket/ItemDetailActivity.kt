@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
 import com.example.admin_bookmarket.ViewModel.ItemDetailViewModel
 import com.example.admin_bookmarket.data.model.Book
 import com.example.admin_bookmarket.databinding.ActivityItemDetailBinding
@@ -86,9 +87,11 @@ class ItemDetailActivity : AppCompatActivity() {
             binding.idThumbnail.setImageURI(imageUri)
             Glide
                 .with(baseContext)
+                .asBitmap()
                 .load(imageUri)
                 .centerCrop()
-                .placeholder(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.bg_white_placeholder)
+                .transition(BitmapTransitionOptions.withCrossFade())
                 .into(binding.idTnBackground)
             oldImageId = ""
             oldImageUrl = ""
@@ -119,15 +122,19 @@ class ItemDetailActivity : AppCompatActivity() {
     private fun loadImageFromUri(uri: Uri) {
         Glide
             .with(baseContext)
+            .asBitmap()
             .load(uri)
             .centerCrop()
-            .placeholder(R.drawable.ic_launcher_background)
+            .placeholder(R.drawable.bg_white_placeholder)
+            .transition(BitmapTransitionOptions.withCrossFade())
             .into(binding.idTnBackground)
         Glide
             .with(baseContext)
+            .asBitmap()
             .load(uri)
             .centerCrop()
-            .placeholder(R.drawable.ic_launcher_background)
+            .placeholder(R.drawable.bg_white_placeholder)
+            .transition(BitmapTransitionOptions.withCrossFade())
             .into(binding.idThumbnail)
     }
 

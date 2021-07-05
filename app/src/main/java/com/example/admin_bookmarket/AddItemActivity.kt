@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
 import com.example.admin_bookmarket.ViewModel.AddItemViewModel
 import com.example.admin_bookmarket.data.common.AppUtils
 import com.example.admin_bookmarket.databinding.ActivityAddItemBinding
@@ -130,9 +131,11 @@ class AddItemActivity : AppCompatActivity() {
             binding.idThumbnail.setImageURI(imageUri)
             Glide
                 .with(baseContext)
+                .asBitmap()
                 .load(imageUri)
                 .centerCrop()
-                .placeholder(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.bg_white_placeholder)
+                .transition(BitmapTransitionOptions.withCrossFade())
                 .into(binding.idTnBackground)
         }
     }
@@ -158,7 +161,7 @@ class AddItemActivity : AppCompatActivity() {
         binding.idPrice.setText("", TextView.BufferType.EDITABLE)
         binding.idKind.setText("", TextView.BufferType.EDITABLE)
         binding.idThumbnail.setImageDrawable(resources.getDrawable(R.drawable.add_new_book))
-        binding.idTnBackground.setBackgroundDrawable(resources.getDrawable(R.drawable.add_new_book))
+        binding.idTnBackground.setImageDrawable(resources.getDrawable(R.drawable.add_new_book))
         Toast.makeText(this, "Add success", Toast.LENGTH_SHORT).show()
     }
 

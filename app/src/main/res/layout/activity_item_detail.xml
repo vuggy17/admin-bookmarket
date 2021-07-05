@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ItemDetailActivity">
+
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
@@ -123,12 +124,11 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
-                android:layout_marginHorizontal="20dp"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
                 android:background="@drawable/bg_linear_layout_item_info"
-                >
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -137,13 +137,14 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
+
                     <TextView
                         android:id="@+id/tv_counts"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Num of books: "
-                        app:layout_constraintHorizontal_bias="0"
                         app:layout_constraintEnd_toStartOf="@+id/id_Count"
+                        app:layout_constraintHorizontal_bias="0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -151,13 +152,12 @@
                         android:id="@+id/id_Count"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
                         android:gravity="top"
                         android:hint="Num"
                         android:inputType="number"
                         android:singleLine="true"
-                        android:background="@android:color/transparent"
-                        android:textSize="14sp"
-                        />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
 
@@ -166,12 +166,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:background="@android:color/transparent"
                     android:fontFamily="@font/roboto_bold"
                     android:hint="Title"
                     android:textColor="#2A2A2A"
                     android:textSize="25dp"
                     android:textStyle="bold"
-                    android:background="@android:color/transparent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
@@ -181,24 +181,26 @@
                     android:id="@+id/id_author"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="Author"
                     android:textColor="@color/fade_gray"
                     android:textSize="14dp"
-                    android:background="@android:color/transparent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/id_title" />
 
                 <LinearLayout
-                    android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
                     <TextView
                         android:layout_width="wrap_content"
-                        android:text="Kind: "
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:text="Kind: " />
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/statusBox"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -231,39 +233,56 @@
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/ln_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="right"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/id_author"
-                    android:gravity="right">
+                    app:layout_constraintTop_toBottomOf="@+id/id_author">
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:text="Price"
+                        android:textSize="22sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <EditText
                         android:id="@+id/id_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:fontFamily="@font/roboto_bold"
-                        android:hint="Price"
                         android:layout_marginRight="5dp"
+                        android:background="@android:color/transparent"
+                        android:hint="enter price"
+                        android:layout_marginEnd="5dp"
                         android:inputType="number"
-                        android:textSize="22dp"/>
+                        android:textSize="22sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView4"
+                        app:layout_constraintEnd_toStartOf="@id/tvĐ"
+                        app:layout_constraintTop_toTopOf="@+id/textView4" />
 
                     <TextView
+                        app:layout_constraintEnd_toEndOf="parent"
+
                         android:id="@+id/tvĐ"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_bold"
                         android:text="đ"
                         android:textSize="22dp" />
-                </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/id_review"
@@ -321,14 +340,14 @@
                     app:layout_constraintTop_toBottomOf="@+id/id_review" />
 
                 <EditText
-                    android:layout_marginTop="5dp"
-                    android:justificationMode="inter_word"
                     android:id="@+id/id_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@android:color/transparent"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="Add a description"
-                    android:background="@android:color/transparent"
+                    android:justificationMode="inter_word"
                     android:textColor="@color/fade_gray"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -343,8 +362,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
-        android:layout_marginBottom="30dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="30dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -359,26 +378,26 @@
             android:layout_gravity="center"
             android:background="@drawable/bg_blue_rounded_outline_btn"
             android:drawableStart="@drawable/delete_outline_black_18dp"
-            android:paddingStart="17dp"
             android:drawableLeft="@drawable/img_add_cart"
+            android:paddingStart="17dp"
             android:paddingLeft="20dp" />
 
 
         <Button
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             android:id="@+id/id_update"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginStart="18dp"
+            android:layout_marginLeft="18dp"
             android:backgroundTint="@color/blue_light"
             android:fontFamily="@font/roboto_regular"
             android:insetTop="0dp"
             android:insetBottom="0dp"
             android:text="Update"
             android:textAllCaps="false"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             android:textColor="@color/white"
             android:textSize="20sp"
-            app:cornerRadius="14dp"
-            android:layout_marginLeft="18dp" />
+            app:cornerRadius="14dp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

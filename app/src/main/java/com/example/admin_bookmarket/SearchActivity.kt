@@ -3,6 +3,7 @@ package com.example.admin_bookmarket
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -16,6 +17,10 @@ import com.example.admin_bookmarket.data.FullBookList
 import com.example.admin_bookmarket.data.common.Constants
 import com.example.admin_bookmarket.data.model.Book
 import com.example.admin_bookmarket.databinding.ActivitySearchBinding
+import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.QuerySnapshot
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -39,7 +44,7 @@ class SearchActivity : AppCompatActivity() {
             it.adapter = adapterSuggest
         }
 
-        viewModel._lstBook.observe(this, changeObsever)
+        viewModel.lstBook.observe(this, changeObsever)
 
         binding.rcSuggestSearch.setOnItemClickListener(
             AdapterView.OnItemClickListener { parent, view, position, id ->
@@ -77,6 +82,7 @@ class SearchActivity : AppCompatActivity() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText != "") {
+                    Log.d("0000000000", "00000000000000")
                     adapterSuggest.filter.filter(newText)
                     binding.rcSuggestSearch.visibility = View.VISIBLE
                 }
@@ -98,6 +104,9 @@ class SearchActivity : AppCompatActivity() {
             lstNameOfBook.add(value[i].Name!!)
             adapterSuggest.add(value[i].Name!!)
         }
+        var newString: String = binding.tbSearchView.query.toString()
+        binding.tbSearchView.setQuery(binding.tbSearchView.query.toString() + "a", false)
+        binding.tbSearchView.setQuery(newString, false)
     } }
 
     fun putBookIntoIntent(id:String)
@@ -108,4 +117,28 @@ class SearchActivity : AppCompatActivity() {
         intent.putExtras(bundle)
         binding.root.context.startActivity(intent)
     }
+
+//    fun snipInDb()
+//    {
+//        FirebaseFirestore.getInstance().collection("books").addSnapshotListener(object:
+//            EventListener<QuerySnapshot> {
+//            override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
+//                if (error != null) {
+//                    Log.w(Constants.VMTAG, "Listen failed.", error)
+//                    return
+//                }
+//                adapterSuggest.clear()
+//                lstNameOfBook.clear()
+//                for (i in 0 until FullBookList.getInstance().lstFullBook.size-1)
+//                {
+//                    lstNameOfBook.add(FullBookList.getInstance().lstFullBook[i].Name!!)
+//                    adapterSuggest.add(FullBookList.getInstance().lstFullBook[i].Name!!)
+//                }
+//                adapterSuggest.notifyDataSetChanged()
+//                var newString: String = binding.tbSearchView.query.toString()
+//                binding.tbSearchView.setQuery(binding.tbSearchView.query.toString() + "a", false)
+//                binding.tbSearchView.setQuery(newString, false)
+//            }
+//        })
+//    }
 }

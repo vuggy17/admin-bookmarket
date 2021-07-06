@@ -16,8 +16,8 @@ import kotlin.math.roundToInt
 @HiltViewModel
 class SearchViewModel @Inject constructor(): ViewModel() {
 
-    private var lstBook = MutableLiveData<MutableList<Book>>()
-    val _lstBook get() = lstBook
+    private var _lstBook = MutableLiveData<MutableList<Book>>()
+    val lstBook get() = _lstBook
 
     init {
         loadData()
@@ -47,7 +47,7 @@ class SearchViewModel @Inject constructor(): ViewModel() {
                             doc.data["Description"].toString())
                         lstAllBook.add(bookItem)
                     }
-                    _lstBook.value = lstAllBook
+                    lstBook.value = lstAllBook
                 }
             }
 

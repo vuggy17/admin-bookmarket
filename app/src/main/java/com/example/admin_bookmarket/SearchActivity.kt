@@ -98,6 +98,9 @@ class SearchActivity : AppCompatActivity() {
             lstNameOfBook.add(value[i].Name!!)
             adapterSuggest.add(value[i].Name!!)
         }
+        var newString: String = binding.tbSearchView.query.toString()
+        binding.tbSearchView.setQuery(binding.tbSearchView.query.toString() + "a", false)
+        binding.tbSearchView.setQuery(newString, false)
     } }
 
     fun putBookIntoIntent(id:String)

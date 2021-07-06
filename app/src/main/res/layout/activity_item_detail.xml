@@ -323,6 +323,7 @@
                 <EditText
                     android:layout_marginTop="5dp"
                     android:justificationMode="inter_word"
+                    android:textAlignment="inherit"
                     android:id="@+id/id_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

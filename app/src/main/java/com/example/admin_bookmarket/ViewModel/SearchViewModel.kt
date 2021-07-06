@@ -3,6 +3,7 @@ package com.example.admin_bookmarket.ViewModel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.admin_bookmarket.data.common.AppUtil
 import com.example.admin_bookmarket.data.common.Constants
 import com.example.admin_bookmarket.data.model.Book
 import com.google.firebase.firestore.EventListener
@@ -36,16 +37,22 @@ class SearchViewModel @Inject constructor(): ViewModel() {
                 if (value != null) {
                     var lstAllBook: MutableList<Book> = mutableListOf()
                     for(doc in value) {
-                        var bookItem: Book = Book(doc.id,
-                            doc.data["Image"].toString(),
-                            doc.data["Name"].toString(),
-                            doc.data["Author"].toString(),
-                            doc.data["Price"].toString().toDouble().roundToInt(),
-                            doc.data["rate"].toString().toDouble().roundToInt(),
-                            doc.data["Kind"].toString(),
-                            doc.data["Counts"].toString().toDouble().roundToInt(),
-                            doc.data["Description"].toString())
-                        lstAllBook.add(bookItem)
+                        if (doc.data["Saler"].toString() == AppUtil.currentAccount.email) {
+                            var bookItem: Book = Book(
+                                doc.id,
+                                doc.data["Image"].toString(),
+                                doc.data["Name"].toString(),
+                                doc.data["Author"].toString(),
+                                doc.data["Price"].toString().toDouble().roundToInt(),
+                                doc.data["rate"].toString().toDouble().roundToInt(),
+                                doc.data["Kind"].toString(),
+                                doc.data["Counts"].toString().toDouble().roundToInt(),
+                                doc.data["Description"].toString(),
+                                doc.data["Saler"].toString(),
+                                doc.data["SalerName"].toString()
+                            )
+                            lstAllBook.add(bookItem)
+                        }
                     }
                     _lstBook.value = lstAllBook
                 }
